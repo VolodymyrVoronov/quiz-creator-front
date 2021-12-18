@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
+import Paths from "const/path";
+import StartPage from "pages/StartPage/StartPage";
+
+const App: FC<{}> = (): JSX.Element => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path={Paths.Root} element={<Navigate to={Paths.StartPage} />} />
+      <Route path={Paths.StartPage} element={<StartPage />} />
+      <Route path={Paths.NoPage} element={<p>Nothing found.</p>} />
+    </Routes>
   );
-}
+};
 
 export default App;
