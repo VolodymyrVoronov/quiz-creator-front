@@ -1,0 +1,45 @@
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 400px;
+  height: 200px;
+
+  font-size: 30px;
+  line-height: 36px;
+
+  color: var(--bb-palette-white);
+
+  border: none;
+
+  background-color: var(--bb-palette-text200);
+
+  transition: 250ms ease;
+
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--bb-palette-text400);
+
+  transition: 250ms ease;
+}
+
+.topButton {
+  padding-top: 35px;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.bottomButton {
+  margin-top: 1px;
+  padding-bottom: 35px;
+
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}

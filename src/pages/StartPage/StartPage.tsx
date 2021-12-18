@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { Flex, Box, Text } from "bumbag";
 
+import StartPageButtons from "components/StartPageButtons/StartPageButtons";
+
 const StartPage: FC<{}> = (): JSX.Element => {
   return (
     <Flex
@@ -10,11 +12,13 @@ const StartPage: FC<{}> = (): JSX.Element => {
       height="100vh"
     >
       <Box>
-        <Text fontSize="36px" fontWeight="bold">
+        <Text fontSize="56px" fontWeight="bold">
           Quiz Creator
         </Text>
       </Box>
-      <Box>Buttons</Box>
+      <Box marginTop="25px">
+        <StartPageButtons />
+      </Box>
     </Flex>
   );
 };
