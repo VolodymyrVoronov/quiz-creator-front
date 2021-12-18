@@ -1,11 +1,19 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Flex, Box, Text } from "bumbag";
+import { ImPencil, ImList2 } from "react-icons/im";
 
-import StartPageButtons from "components/StartPageButtons/StartPageButtons";
+import Paths from "const/path";
+
+import DoubleButtons from "components/DoubleButtons/DoubleButtons";
 
 const StartPage: FC<{}> = (): JSX.Element => {
-  const onCreateNewQuizButtonClick = () => {};
+  const navigation = useNavigate();
+
+  const onCreateNewQuizButtonClick = () => {
+    navigation(Paths.AuthPage);
+  };
 
   const onAllQuizzesButtonClick = () => {};
 
@@ -28,13 +36,15 @@ const StartPage: FC<{}> = (): JSX.Element => {
         </motion.span>
       </Box>
       <Box marginTop="25px">
-        <StartPageButtons
+        <DoubleButtons
           onTopButtonClick={onCreateNewQuizButtonClick}
           topButtonText="Create new quiz"
           topButtonArialLabel="Create new quiz button"
+          topButtonIcon={<ImPencil />}
           onBottomButtonClick={onAllQuizzesButtonClick}
           bottomButtonText="All quizzes"
           bottomButtonArialLabel="All quizzes button"
+          bottomButtonIcon={<ImList2 />}
         />
       </Box>
     </Flex>

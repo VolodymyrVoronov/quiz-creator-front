@@ -1,22 +1,23 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { motion } from "framer-motion";
-import { ImPencil, ImList2 } from "react-icons/im";
 
-import styles from "./StartPageButtons.module.css";
+import styles from "./DoubleButtons.module.css";
 
-interface IStartPageButtonsProps {
+interface IDoubleButtonsProps {
   onTopButtonClick: () => void;
   topButtonText: string;
   topButtonArialLabel: string;
   topButtonDisabled?: boolean;
+  topButtonIcon?: ReactNode;
 
   onBottomButtonClick: () => void;
   bottomButtonText: string;
   bottomButtonArialLabel: string;
   bottomButtonDisabled?: boolean;
+  bottomButtonIcon?: ReactNode;
 }
 
-const StartPageButtons: FC<IStartPageButtonsProps> = ({
+const DoubleButtons: FC<IDoubleButtonsProps> = ({
   onTopButtonClick,
   onBottomButtonClick,
   topButtonArialLabel,
@@ -25,6 +26,8 @@ const StartPageButtons: FC<IStartPageButtonsProps> = ({
   bottomButtonText,
   topButtonDisabled,
   bottomButtonDisabled,
+  topButtonIcon,
+  bottomButtonIcon,
 }): JSX.Element => {
   return (
     <motion.div
@@ -43,13 +46,16 @@ const StartPageButtons: FC<IStartPageButtonsProps> = ({
         disabled={topButtonDisabled}
       >
         {topButtonText}
-        <motion.span
-          animate={{ rotate: 360 }}
-          transition={{ delay: 4.1, duration: 0.5, ease: "easeIn" }}
-          className={styles.icon}
-        >
-          <ImPencil />
-        </motion.span>
+
+        {topButtonIcon && (
+          <motion.span
+            animate={{ rotate: 360 }}
+            transition={{ delay: 4.1, duration: 0.5, ease: "easeIn" }}
+            className={styles.icon}
+          >
+            {topButtonIcon}
+          </motion.span>
+        )}
       </motion.button>
       <motion.button
         initial={{ opacity: 0 }}
@@ -61,17 +67,20 @@ const StartPageButtons: FC<IStartPageButtonsProps> = ({
         aria-label={bottomButtonArialLabel}
         disabled={bottomButtonDisabled}
       >
-        <motion.span
-          animate={{ rotate: 360 }}
-          transition={{ delay: 4.1, duration: 0.5, ease: "easeIn" }}
-          className={styles.icon}
-        >
-          <ImList2 />
-        </motion.span>
+        {bottomButtonIcon && (
+          <motion.span
+            animate={{ rotate: 360 }}
+            transition={{ delay: 4.1, duration: 0.5, ease: "easeIn" }}
+            className={styles.icon}
+          >
+            {bottomButtonIcon}
+          </motion.span>
+        )}
+
         {bottomButtonText}
       </motion.button>
     </motion.div>
   );
 };
 
-export default StartPageButtons;
+export default DoubleButtons;
