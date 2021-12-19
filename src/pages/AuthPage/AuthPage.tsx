@@ -4,7 +4,7 @@ import { ImEnter, ImKey2 } from "react-icons/im";
 import Paths from "const/path";
 
 import BackButton from "components/common/BackButton/BackButton";
-import Page from "components/Page/Page";
+import PageLayout from "components/PageLayout/PageLayout";
 
 const AuthPage: FC<{}> = (): JSX.Element => {
   const onSingInButtonClick = () => {};
@@ -14,7 +14,7 @@ const AuthPage: FC<{}> = (): JSX.Element => {
   return (
     <>
       <BackButton routeName={Paths.StartPage} />
-      <Page
+      <PageLayout
         pageTitle="Authentication"
         onTopButtonClick={onSingInButtonClick}
         topButtonText="Sign in"

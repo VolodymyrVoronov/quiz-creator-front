@@ -4,7 +4,7 @@ import { ImPencil, ImList2 } from "react-icons/im";
 
 import Paths from "const/path";
 
-import Page from "components/Page/Page";
+import PageLayout from "components/PageLayout/PageLayout";
 
 const StartPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
@@ -13,10 +13,12 @@ const StartPage: FC<{}> = (): JSX.Element => {
     navigation(Paths.AuthPage);
   };
 
-  const onAllQuizzesButtonClick = () => {};
+  const onAllQuizzesButtonClick = () => {
+    navigation(Paths.AllQuizzesPage);
+  };
 
   return (
-    <Page
+    <PageLayout
       pageTitle="Quiz Creator"
       onTopButtonClick={onCreateNewQuizButtonClick}
       topButtonText="Create new quiz"

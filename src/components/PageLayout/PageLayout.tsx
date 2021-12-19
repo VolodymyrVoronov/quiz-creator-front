@@ -1,10 +1,10 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { Box, Flex, Text } from "bumbag";
 import { motion } from "framer-motion";
 
 import DoubleButtons from "components/DoubleButtons/DoubleButtons";
 
-interface IPageProps {
+interface IPageLayoutProps {
   pageTitle: string;
 
   onTopButtonClick: () => void;
@@ -20,13 +20,14 @@ interface IPageProps {
   bottomButtonIcon?: ReactNode;
 }
 
-const Page: FC<IPageProps> = ({
+const PageLayout: FC<IPageLayoutProps> = ({
   pageTitle,
 
   onTopButtonClick,
   topButtonText,
   topButtonArialLabel,
   topButtonIcon,
+
   onBottomButtonClick,
   bottomButtonText,
   bottomButtonArialLabel,
@@ -79,4 +80,4 @@ const Page: FC<IPageProps> = ({
   );
 };
 
-export default Page;
+export default PageLayout;
