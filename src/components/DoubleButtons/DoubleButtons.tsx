@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import { motion } from "framer-motion";
+import { Text } from "bumbag";
 
 import styles from "./DoubleButtons.module.css";
 
@@ -45,7 +46,7 @@ const DoubleButtons: FC<IDoubleButtonsProps> = ({
         aria-label={topButtonArialLabel}
         disabled={topButtonDisabled}
       >
-        {topButtonText}
+        <Text>{topButtonText}</Text>
 
         {topButtonIcon && (
           <motion.span
@@ -77,7 +78,7 @@ const DoubleButtons: FC<IDoubleButtonsProps> = ({
           </motion.span>
         )}
 
-        {bottomButtonText}
+        <Text>{bottomButtonText}</Text>
       </motion.button>
     </motion.div>
   );

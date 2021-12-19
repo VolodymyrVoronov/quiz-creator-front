@@ -12,11 +12,11 @@ const theme = {
     fontSize: 18,
     styles: {
       base: css`
-        html {
-          box-sizing: border-box;
-        }
-
+        html,
         body {
+          box-sizing: border-box;
+          height: 100%;
+
           background-color: #ffffff;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg stroke='%23CCC' stroke-width='0' %3E%3Crect fill='%23F5F5F5' x='-60' y='-60' width='110' height='240'/%3E%3C/g%3E%3C/svg%3E");
         }
@@ -32,7 +32,7 @@ const theme = {
 
   palette: {
     text: "#435B6C",
-    primary: "#574feb",
+    primary: "#60839b",
     info: "#CFD7E1",
     success: "#67C6B9",
     danger: "#F3705B",

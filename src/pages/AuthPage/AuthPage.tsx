@@ -1,8 +1,10 @@
 import { FC } from "react";
-import { Flex, Box } from "bumbag";
 import { ImEnter, ImKey2 } from "react-icons/im";
 
-import DoubleButtons from "components/DoubleButtons/DoubleButtons";
+import Paths from "const/path";
+
+import BackButton from "components/common/BackButton/BackButton";
+import Page from "components/Page/Page";
 
 const AuthPage: FC<{}> = (): JSX.Element => {
   const onSingInButtonClick = () => {};
@@ -10,25 +12,20 @@ const AuthPage: FC<{}> = (): JSX.Element => {
   const onSingUpButtonClick = () => {};
 
   return (
-    <Flex
-      justifyContent="center"
-      flexDirection="column"
-      alignItems="center"
-      height="100vh"
-    >
-      <Box>
-        <DoubleButtons
-          onTopButtonClick={onSingInButtonClick}
-          topButtonText="Sign in"
-          topButtonArialLabel="Sign in button"
-          topButtonIcon={<ImEnter />}
-          onBottomButtonClick={onSingUpButtonClick}
-          bottomButtonText="Sign up"
-          bottomButtonArialLabel="Sign up button"
-          bottomButtonIcon={<ImKey2 />}
-        />
-      </Box>
-    </Flex>
+    <>
+      <BackButton routeName={Paths.StartPage} />
+      <Page
+        pageTitle="Authentication"
+        onTopButtonClick={onSingInButtonClick}
+        topButtonText="Sign in"
+        topButtonArialLabel="Sign in button"
+        topButtonIcon={<ImEnter />}
+        onBottomButtonClick={onSingUpButtonClick}
+        bottomButtonText="Sign up"
+        bottomButtonArialLabel="Sign up button"
+        bottomButtonIcon={<ImKey2 />}
+      />
+    </>
   );
 };
 
