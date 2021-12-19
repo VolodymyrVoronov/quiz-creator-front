@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { ImEnter, ImKey2 } from "react-icons/im";
 
 import Paths from "const/path";
@@ -29,4 +29,4 @@ const AuthPage: FC<{}> = (): JSX.Element => {
   );
 };
 
-export default AuthPage;
+export default memo(AuthPage);
