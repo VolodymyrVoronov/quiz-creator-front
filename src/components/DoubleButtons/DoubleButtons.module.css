@@ -47,7 +47,6 @@
   }
 }
 
-
 @media only screen and (min-width: 2560px) {
   .button {
     width: 600px;
@@ -63,7 +62,6 @@
 
   transition: 250ms ease;
 }
-
 
 .topButton {
   padding-top: 50px;
@@ -81,11 +79,9 @@
   display: block;
   margin: 15px 0;
 
-
   opacity: 0.7;
   transition: 750ms ease;
 }
-
 
 @media only screen and (min-width: 320px) {
   .icon {
@@ -104,7 +100,6 @@
     font-size: 40px;
   }
 }
-
 
 @media only screen and (min-width: 2560px) {
   .icon {
