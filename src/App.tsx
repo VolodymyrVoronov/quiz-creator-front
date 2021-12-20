@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Paths from "const/path";
 import StartPage from "pages/StartPage/StartPage";
+import Loader from "components/common/Loader/Loader";
 
 const AuthPage = lazy(
   () => import(/* webpackPrefetch: true */ "pages/AuthPage/AuthPage")
@@ -19,7 +20,7 @@ const AuthFormPage = lazy(
 
 const App: FC<{}> = (): JSX.Element => {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path={Paths.Root} element={<Navigate to={Paths.StartPage} />} />
         <Route path={Paths.StartPage} element={<StartPage />} />

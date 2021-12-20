@@ -1,5 +1,4 @@
 import { FC, memo } from "react";
-import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
 import { ImEnter, ImKey2 } from "react-icons/im";
 
@@ -10,7 +9,7 @@ import Paths from "const/path";
 import BackButton from "components/common/BackButton/BackButton";
 import PageLayout from "components/PageLayout/PageLayout";
 
-const AuthPage: FC<{}> = observer((): JSX.Element => {
+const AuthPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
 
   const onSingInButtonClick = () => {
@@ -41,6 +40,6 @@ const AuthPage: FC<{}> = observer((): JSX.Element => {
       />
     </>
   );
-});
+};
 
 export default memo(AuthPage);

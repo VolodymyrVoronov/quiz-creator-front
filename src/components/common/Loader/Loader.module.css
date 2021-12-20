@@ -1,0 +1,32 @@
+.loaderContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.loader {
+  font-size: 48px;
+  color: #435B6C;
+  font-weight: 500;
+  position: relative;
+}
+
+.loader:after {
+  content: '';
+  height: 5px;
+  width: 0%;
+  display: block;
+  background: #FF3D00;
+  animation: 5s lineGrow linear infinite;
+}
+
+@keyframes lineGrow {
+  to {
+    width: 100%;
+  }
+}

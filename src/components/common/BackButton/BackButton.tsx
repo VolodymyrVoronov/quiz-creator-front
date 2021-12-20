@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -36,4 +36,4 @@ const BackButton: FC<IBackButtonProps> = ({ routeName }): JSX.Element => {
   );
 };
 
-export default BackButton;
+export default memo(BackButton);
