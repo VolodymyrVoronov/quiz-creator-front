@@ -13,6 +13,10 @@ const AllQuizzesPage = lazy(
     import(/* webpackPrefetch: true */ "pages/AllQuizzesPage/AllQuizzesPage")
 );
 
+const AuthFormPage = lazy(
+  () => import(/* webpackPrefetch: true */ "pages/AuthFormPage/AuthFormPage")
+);
+
 const App: FC<{}> = (): JSX.Element => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
@@ -20,6 +24,7 @@ const App: FC<{}> = (): JSX.Element => {
         <Route path={Paths.Root} element={<Navigate to={Paths.StartPage} />} />
         <Route path={Paths.StartPage} element={<StartPage />} />
         <Route path={Paths.AuthPage} element={<AuthPage />} />
+        <Route path={Paths.AuthFormPage} element={<AuthFormPage />} />
         <Route path={Paths.AllQuizzesPage} element={<AllQuizzesPage />} />
         <Route path={Paths.NoPage} element={<p>Nothing found.</p>} />
       </Routes>
