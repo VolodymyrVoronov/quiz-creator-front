@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, Flex, Input, Text, Stack, Set, Button } from "bumbag";
 import { motion } from "framer-motion";
 
-import quizzesStore from "store/quizzesStore";
+import authStore from "store/authStore";
 
 import Paths from "const/path";
 
@@ -15,24 +15,24 @@ interface IFormState {
   passwordConfirm?: string;
 }
 
-const initialFormState = quizzesStore.isSignInForm
-  ? {
-      email: "",
-      password: "",
-    }
-  : {
-      email: "",
-      password: "",
-      passwordConfirm: "",
-    };
-
 const AuthFormPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
+
+  const initialFormState = authStore.isSignInForm
+    ? {
+        email: "",
+        password: "",
+      }
+    : {
+        email: "",
+        password: "",
+        passwordConfirm: "",
+      };
 
   const [formData, setFormData] = useState<IFormState>(initialFormState);
 
   useEffect(() => {
-    if (quizzesStore.isSignInForm === undefined) {
+    if (authStore.isSignInForm === undefined) {
       navigation(Paths.AuthPage);
     }
   }, [navigation]);
@@ -49,16 +49,14 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
   };
 
   const onAuthButtonClick = () => {
-    console.log(`Auth`);
+    console.log(formData);
   };
 
-  const isFormFieldsEmpty = quizzesStore.isSignInForm
+  const isFormFieldsEmpty = authStore.isSignInForm
     ? formData.email.length === 0 || formData.password.length === 0
     : formData.email.length === 0 ||
       formData.password.length === 0 ||
       formData.passwordConfirm?.length === 0;
-
-  console.log(formData);
 
   return (
     <motion.div
@@ -95,7 +93,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               }}
               fontWeight="bold"
             >
-              {quizzesStore.isSignInForm ? "Sign In" : "Sign Up"}
+              {authStore.isSignInForm ? "Sign In" : "Sign Up"}
             </Text>
           </motion.span>
           <Flex flexDirection="column" marginTop="25px">
@@ -122,7 +120,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 isRequired
               />
 
-              {!quizzesStore.isSignInForm ? (
+              {!authStore.isSignInForm ? (
                 <Input
                   onChange={onFormInputChange}
                   value={formData.passwordConfirm}
@@ -156,7 +154,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   isLoading={false}
                   disabled={isFormFieldsEmpty}
                 >
-                  {quizzesStore.isSignInForm ? "Sign In" : "Sign Up"}
+                  {authStore.isSignInForm ? "Sign In" : "Sign Up"}
                 </Button>
               </Set>
             </Stack>

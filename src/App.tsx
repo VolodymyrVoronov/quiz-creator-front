@@ -2,6 +2,7 @@ import { FC, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Paths from "const/path";
+
 import StartPage from "pages/StartPage/StartPage";
 import Loader from "components/common/Loader/Loader";
 
