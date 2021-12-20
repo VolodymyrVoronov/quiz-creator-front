@@ -27,6 +27,7 @@ const BackButton: FC<IBackButtonProps> = ({ routeName }): JSX.Element => {
           borderRadius="50%"
           color="white"
           aria-label="Back button"
+          type="button"
         >
           <ImArrowLeft2 />
         </Button>

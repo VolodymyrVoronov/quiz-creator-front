@@ -109,10 +109,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 size="medium"
                 isRequired
                 after={
-                  <Box alignY="center" alignX="center" marginRight="15px">
+                  <Box alignY="center" alignX="center" marginX="15px">
                     <ImEnvelop />
                   </Box>
                 }
+                aria-label="Email field"
               />
 
               <Input
@@ -125,10 +126,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 size="medium"
                 isRequired
                 after={
-                  <Box alignY="center" alignX="center" marginRight="11px">
+                  <Box alignY="center" alignX="center" marginX="11px">
                     <ImLock />
                   </Box>
                 }
+                aria-label="Password field"
               />
 
               {!authStore.isSignInForm ? (
@@ -142,10 +144,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   size="medium"
                   isRequired
                   after={
-                    <Box alignY="center" alignX="center" marginRight="11px">
+                    <Box alignY="center" alignX="center" marginX="11px">
                       <ImLock />
                     </Box>
                   }
+                  aria-label="Confirm password field"
                 />
               ) : null}
 
@@ -158,6 +161,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   flexGrow="1"
                   isLoading={false}
                   disabled={isFormFieldsEmpty}
+                  aria-label="Clear all fields"
                 >
                   Cancel
                 </Button>
@@ -169,6 +173,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   flexGrow="1"
                   isLoading={false}
                   disabled={isFormFieldsEmpty}
+                  aria-label={authStore.isSignInForm ? "Sign In" : "Sign Up"}
                 >
                   {authStore.isSignInForm ? "Sign In" : "Sign Up"}
                 </Button>
