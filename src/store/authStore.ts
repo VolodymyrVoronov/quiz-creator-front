@@ -1,6 +1,7 @@
 import { observable, computed, action } from "mobx";
 
 class authStore {
+  @observable isAuthorizing: boolean = false;
   @observable isSignInForm: boolean | undefined = undefined;
 
   @computed

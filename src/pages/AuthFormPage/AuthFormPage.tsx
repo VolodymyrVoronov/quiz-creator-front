@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Flex, Input, Text, Stack, Set, Button } from "bumbag";
+import { Card, Flex, Input, Text, Stack, Set, Button, Box } from "bumbag";
 import { motion } from "framer-motion";
+import { ImEnvelop, ImLock } from "react-icons/im";
 
 import authStore from "store/authStore";
 
@@ -107,6 +108,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 width="100%"
                 size="medium"
                 isRequired
+                after={
+                  <Box alignY="center" alignX="center" marginRight="15px">
+                    <ImEnvelop />
+                  </Box>
+                }
               />
 
               <Input
@@ -118,6 +124,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 width="100%"
                 size="medium"
                 isRequired
+                after={
+                  <Box alignY="center" alignX="center" marginRight="11px">
+                    <ImLock />
+                  </Box>
+                }
               />
 
               {!authStore.isSignInForm ? (
@@ -130,6 +141,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   width="100%"
                   size="medium"
                   isRequired
+                  after={
+                    <Box alignY="center" alignX="center" marginRight="11px">
+                      <ImLock />
+                    </Box>
+                  }
                 />
               ) : null}
 
