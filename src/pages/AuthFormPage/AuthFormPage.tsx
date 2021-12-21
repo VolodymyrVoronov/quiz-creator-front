@@ -122,7 +122,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
           <Divider marginTop="10px" />
           <Flex flexDirection="column" marginTop="25px">
             {!authStore.isSignInForm ? (
-              <Flex flexDirection="row" marginBottom="25px">
+              <Flex flexDirection="row" marginBottom="15px">
                 <Flex
                   flexDirection="column"
                   justifyContent="flex-start"
