@@ -81,6 +81,8 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
       formData.passwordConfirm?.length === 0 ||
       formData.avatar?.length === 0;
 
+  const arePasswordsMatch = formData.password === formData.passwordConfirm;
+
   return (
     <motion.div
       initial={{ x: -500, opacity: 0 }}
@@ -119,7 +121,9 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               {authStore.isSignInForm ? "Sign In" : "Sign Up"}
             </Text>
           </motion.span>
+
           <Divider marginTop="10px" />
+
           <Flex flexDirection="column" marginTop="25px">
             {!authStore.isSignInForm ? (
               <Flex flexDirection="row" marginBottom="15px">
@@ -158,6 +162,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                     )}
                   </Flex>
                 </Flex>
+
                 <Flex>
                   <Flex flexDirection="row" flexWrap="wrap">
                     {appStore.avatars.map((avatarItem, i) => {
@@ -203,6 +208,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 </Flex>
               </Flex>
             ) : null}
+
             <Stack spacing="minor-5" orientation="vertical">
               <Input
                 onChange={onFormInputChange}
@@ -231,7 +237,20 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 size="medium"
                 isRequired
                 after={
-                  <Box alignY="center" alignX="center" marginX="11px">
+                  <Box
+                    alignY="center"
+                    alignX="center"
+                    marginX="11px"
+                    color={
+                      !authStore.isSignInForm
+                        ? arePasswordsMatch && formData.password.length > 0
+                          ? "#67C6B9"
+                          : formData.password.length > 0
+                          ? "#F3705B"
+                          : "#435B6C"
+                        : "#435B6C"
+                    }
+                  >
                     <ImLock />
                   </Box>
                 }
@@ -249,7 +268,21 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   size="medium"
                   isRequired
                   after={
-                    <Box alignY="center" alignX="center" marginX="11px">
+                    <Box
+                      alignY="center"
+                      alignX="center"
+                      marginX="11px"
+                      color={
+                        !authStore.isSignInForm &&
+                        formData.passwordConfirm &&
+                        arePasswordsMatch &&
+                        formData.passwordConfirm?.length > 0
+                          ? "#67C6B9"
+                          : formData.password.length > 0
+                          ? "#F3705B"
+                          : "#435B6C"
+                      }
+                    >
                       <ImLock />
                     </Box>
                   }
