@@ -50,7 +50,7 @@ const PageLayout: FC<IPageLayoutProps> = ({
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ ease: "easeOut", duration: 2, delay: 5 }}
+          transition={{ ease: "easeOut", duration: 2, delay: 4 }}
         >
           <Text
             fontSize={{

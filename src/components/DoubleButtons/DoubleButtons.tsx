@@ -31,11 +31,7 @@ const DoubleButtons: FC<IDoubleButtonsProps> = ({
   bottomButtonIcon,
 }): JSX.Element => {
   return (
-    <motion.div
-      animate={{ rotate: 360 }}
-      transition={{ delay: 3.1, duration: 1, ease: "easeIn" }}
-      className={styles.buttonsContainer}
-    >
+    <motion.div className={styles.buttonsContainer}>
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ x: [-550, 100, 0], opacity: 1 }}
@@ -51,7 +47,7 @@ const DoubleButtons: FC<IDoubleButtonsProps> = ({
         {topButtonIcon && (
           <motion.span
             animate={{ rotate: 360 }}
-            transition={{ delay: 4.1, duration: 0.5, ease: "easeIn" }}
+            transition={{ delay: 3, duration: 0.5, ease: "easeIn" }}
             className={styles.icon}
           >
             {topButtonIcon}
@@ -71,7 +67,7 @@ const DoubleButtons: FC<IDoubleButtonsProps> = ({
         {bottomButtonIcon && (
           <motion.span
             animate={{ rotate: 360 }}
-            transition={{ delay: 4.1, duration: 0.5, ease: "easeIn" }}
+            transition={{ delay: 3, duration: 0.5, ease: "easeIn" }}
             className={styles.icon}
           >
             {bottomButtonIcon}
