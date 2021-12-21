@@ -58,6 +58,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
         setFormData(initialFormState);
       }
     };
+
     window.addEventListener("keydown", onKeyPress);
 
     return () => {
@@ -77,6 +78,15 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
       ...formData,
       avatar: avatarStr,
     });
+  };
+
+  const onAvatarEnterKeyPress = (e: { keyCode: number }, avatarStr: string) => {
+    if (e.keyCode === 13) {
+      setFormData({
+        ...formData,
+        avatar: avatarStr,
+      });
+    }
   };
 
   const onCancelButtonClick = () => {
@@ -193,11 +203,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                         >
                           <Avatar
                             onClick={() => onAvatarClick(avatar)}
-                            onKeyDown={(e) => {
-                              if (e.keyCode === 13) {
-                                onAvatarClick(avatar);
-                              }
-                            }}
+                            onKeyDown={(e) => onAvatarEnterKeyPress(e, avatar)}
                             fit="cover"
                             height="50px"
                             width="50px"
