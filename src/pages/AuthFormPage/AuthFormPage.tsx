@@ -1,16 +1,29 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Flex, Input, Text, Stack, Set, Button, Box } from "bumbag";
+import {
+  Card,
+  Flex,
+  Input,
+  Text,
+  Stack,
+  Set,
+  Button,
+  Box,
+  Avatar,
+  Divider,
+} from "bumbag";
 import { motion } from "framer-motion";
-import { ImEnvelop, ImLock } from "react-icons/im";
+import { ImEnvelop, ImLock, ImUser } from "react-icons/im";
 
 import authStore from "store/authStore";
+import appStore from "store/appStore";
 
 import Paths from "const/path";
 
 import BackButton from "components/common/BackButton/BackButton";
 
 interface IFormState {
+  avatar?: string;
   email: string;
   password: string;
   passwordConfirm?: string;
@@ -25,6 +38,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
         password: "",
       }
     : {
+        avatar: "",
         email: "",
         password: "",
         passwordConfirm: "",
@@ -45,6 +59,13 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     });
   };
 
+  const onAvatarClick = (avatarStr: string) => {
+    setFormData({
+      ...formData,
+      avatar: avatarStr,
+    });
+  };
+
   const onCancelButtonClick = () => {
     setFormData(initialFormState);
   };
@@ -57,7 +78,8 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     ? formData.email.length === 0 || formData.password.length === 0
     : formData.email.length === 0 ||
       formData.password.length === 0 ||
-      formData.passwordConfirm?.length === 0;
+      formData.passwordConfirm?.length === 0 ||
+      formData.avatar?.length === 0;
 
   return (
     <motion.div
@@ -97,7 +119,87 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               {authStore.isSignInForm ? "Sign In" : "Sign Up"}
             </Text>
           </motion.span>
+          <Divider marginTop="10px" />
           <Flex flexDirection="column" marginTop="25px">
+            {!authStore.isSignInForm ? (
+              <Flex flexDirection="row" marginBottom="25px">
+                <Flex
+                  flexDirection="column"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  marginRight="25px"
+                  width="50%"
+                >
+                  <Text
+                    marginBottom="10px"
+                    fontSize={{
+                      "min-mobile": "18px",
+                      "min-desktop": "22px",
+                      "min-fullHD": "24px",
+                    }}
+                    lineHeight="26px"
+                  >
+                    Avatar
+                  </Text>
+                  <Flex justifyContent="center">
+                    {formData.avatar ? (
+                      <Avatar
+                        fit="cover"
+                        height="75px"
+                        width="75px"
+                        src={formData.avatar}
+                        alt="User Avatar"
+                        backgroundColor="white"
+                      />
+                    ) : (
+                      <Box fontSize="60px">
+                        <ImUser />
+                      </Box>
+                    )}
+                  </Flex>
+                </Flex>
+                <Flex>
+                  <Flex flexDirection="row" flexWrap="wrap">
+                    {appStore.avatars.map((avatarItem, i) => {
+                      const { id, avatar, imageAlt } = avatarItem;
+                      return (
+                        <motion.span
+                          key={id}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{
+                            ease: "easeOut",
+                            duration: 1,
+                            delay: i / 5,
+                          }}
+                        >
+                          <Avatar
+                            fit="cover"
+                            height="50px"
+                            width="50px"
+                            src={avatar}
+                            alt={imageAlt}
+                            backgroundColor="white"
+                            onClick={() => onAvatarClick(avatar)}
+                            _hover={{
+                              cursor: "pointer",
+                            }}
+                            tabIndex={0}
+                            margin={{
+                              "min-mobile": "3px",
+                              "min-tablet": "3px",
+                              "min-desktop": "8px",
+                              "min-widescreen": "11px",
+                              "min-fullHD": "11px",
+                            }}
+                          />
+                        </motion.span>
+                      );
+                    })}
+                  </Flex>
+                </Flex>
+              </Flex>
+            ) : null}
             <Stack spacing="minor-5" orientation="vertical">
               <Input
                 onChange={onFormInputChange}
