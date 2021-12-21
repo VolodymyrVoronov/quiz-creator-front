@@ -97,11 +97,18 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     console.log(formData);
   };
 
-  const isFormFieldsEmpty = authStore.isSignInForm
+  const areFormFieldsEmpty = authStore.isSignInForm
     ? formData.email.length === 0 || formData.password.length === 0
     : formData.email.length === 0 ||
       formData.password.length === 0 ||
       formData.passwordConfirm?.length === 0 ||
+      formData.avatar?.length === 0;
+
+  const isOneOfTheFormFieldEmpty = authStore.isSignInForm
+    ? formData.email.length === 0 && formData.password.length === 0
+    : formData.email.length === 0 &&
+      formData.password.length === 0 &&
+      formData.passwordConfirm?.length === 0 &&
       formData.avatar?.length === 0;
 
   const arePasswordsMatch = formData.password === formData.passwordConfirm;
@@ -322,7 +329,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   type="button"
                   flexGrow="1"
                   isLoading={false}
-                  disabled={isFormFieldsEmpty}
+                  disabled={isOneOfTheFormFieldEmpty}
                   aria-label="Clear all fields"
                 >
                   Cancel
@@ -334,7 +341,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   type="button"
                   flexGrow="1"
                   isLoading={false}
-                  disabled={isFormFieldsEmpty}
+                  disabled={areFormFieldsEmpty}
                   aria-label={authStore.isSignInForm ? "Sign In" : "Sign Up"}
                 >
                   {authStore.isSignInForm ? "Sign In" : "Sign Up"}
