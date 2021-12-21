@@ -52,6 +52,19 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     }
   }, [navigation]);
 
+  useEffect(() => {
+    const onKeyPress = (e: { keyCode: number }) => {
+      if (e.keyCode === 27) {
+        setFormData(initialFormState);
+      }
+    };
+    window.addEventListener("keydown", onKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyPress);
+    };
+  }, []);
+
   const onFormInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFormData({
       ...formData,
@@ -180,6 +193,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                         >
                           <Avatar
                             onClick={() => onAvatarClick(avatar)}
+                            onKeyDown={(e) => {
+                              if (e.keyCode === 13) {
+                                onAvatarClick(avatar);
+                              }
+                            }}
                             fit="cover"
                             height="50px"
                             width="50px"
