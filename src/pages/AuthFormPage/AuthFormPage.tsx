@@ -55,7 +55,19 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
   useEffect(() => {
     const onKeyPress = (e: { keyCode: number }) => {
       if (e.keyCode === 27) {
-        setFormData(initialFormState);
+        setFormData(
+          authStore.isSignInForm
+            ? {
+                email: "",
+                password: "",
+              }
+            : {
+                avatar: "",
+                email: "",
+                password: "",
+                passwordConfirm: "",
+              }
+        );
       }
     };
 
