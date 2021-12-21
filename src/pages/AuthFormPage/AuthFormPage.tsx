@@ -174,15 +174,18 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                           }}
                         >
                           <Avatar
+                            onClick={() => onAvatarClick(avatar)}
                             fit="cover"
                             height="50px"
                             width="50px"
                             src={avatar}
                             alt={imageAlt}
                             backgroundColor="white"
-                            onClick={() => onAvatarClick(avatar)}
+                            transition="250ms ease"
                             _hover={{
                               cursor: "pointer",
+                              transition: "250ms ease",
+                              transform: "scale(1.1)",
                             }}
                             tabIndex={0}
                             margin={{
