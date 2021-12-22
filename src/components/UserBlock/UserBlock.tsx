@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Avatar, Button, Flex, Set, Text } from "bumbag";
 import { ImExit } from "react-icons/im";
 
@@ -19,11 +20,17 @@ const UserBlock: FC<{}> = (): JSX.Element => {
 
   const onLogOutButtonClick = () => {
     logOut();
+
     navigation(Paths.StartPage, { replace: true });
   };
 
   return (
-    <div className={styles.userBlock}>
+    <motion.div
+      initial={{ y: -200 }}
+      animate={{ y: 0 }}
+      transition={{ ease: "easeOut", duration: 2 }}
+      className={styles.userBlock}
+    >
       <Flex flexDirection="row">
         <Set spacing="minor-5">
           <Text>{email}</Text>
@@ -40,7 +47,7 @@ const UserBlock: FC<{}> = (): JSX.Element => {
           </Button>
         </Set>
       </Flex>
-    </div>
+    </motion.div>
   );
 };
 
