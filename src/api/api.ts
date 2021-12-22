@@ -7,10 +7,10 @@ const instanceAPI = axios.create({
 });
 
 instanceAPI.interceptors.request.use((req) => {
-  if (localStorage.getItem("profile")) {
+  if (localStorage.getItem("userData")) {
     if (req.headers) {
       req.headers.authorization = `Bearer ${
-        JSON.parse(localStorage.getItem("profile") || "").token
+        JSON.parse(localStorage.getItem("userData") || "").token
       }`;
     }
   }

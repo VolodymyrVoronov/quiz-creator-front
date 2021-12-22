@@ -11,6 +11,7 @@ import { checkIfObjectEmpty } from "helpers/checkIfObjectEmpty";
 
 import StartPage from "pages/StartPage/StartPage";
 import Loader from "components/common/Loader/Loader";
+import UserBlock from "components/UserBlock/UserBlock";
 
 const AuthPage = lazy(
   () => import(/* webpackPrefetch: true */ "pages/AuthPage/AuthPage")
@@ -45,6 +46,7 @@ const App: FC<{}> = (): JSX.Element => {
           toasts.danger({
             title: "Token has been expired.",
             message: "Please sign in again.",
+            duration: 10000,
           });
 
           navigation(Paths.AuthPage);
@@ -55,11 +57,14 @@ const App: FC<{}> = (): JSX.Element => {
     }
   }, []);
 
-  console.log(userData);
+  const isUserLogged = !checkIfObjectEmpty(userData);
 
+  console.log(userData);
   return (
     <Fragment>
       <ToastManager />
+      {isUserLogged ? <UserBlock /> : null}
+
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route

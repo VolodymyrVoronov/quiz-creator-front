@@ -21,6 +21,7 @@ interface IUserData {
   avatar?: string;
   email?: string;
   token?: string;
+  id?: string;
 }
 
 interface IAuthStore {
@@ -32,6 +33,7 @@ interface IAuthStore {
   setTypeOfAuthForm: (flag: boolean) => void;
   setErrorMassageToDefault: () => void;
   setUserData: (userData: IUserData) => void;
+  logOut: () => void;
   signUp: (data: ISignUp, navigation: NavigateFunction) => Promise<void>;
   signIn: (data: ISignIn, navigation: NavigateFunction) => Promise<void>;
 }
@@ -114,5 +116,10 @@ export const authStore = create<IAuthStore>((set, get) => ({
         set({ isAuthorizing: false });
       }
     }
+  },
+
+  logOut: () => {
+    localStorage.removeItem("userData");
+    set({ userData: {} });
   },
 }));

@@ -17,13 +17,13 @@ const AuthPage: FC<{}> = (): JSX.Element => {
   const onSingInButtonClick = () => {
     setTypeOfAuthForm(true);
 
-    navigation(Paths.AuthFormPage);
+    navigation(Paths.AuthFormPage, { replace: true });
   };
 
   const onSingUpButtonClick = () => {
     setTypeOfAuthForm(false);
 
-    navigation(Paths.AuthFormPage);
+    navigation(Paths.AuthFormPage, { replace: true });
   };
 
   return (
