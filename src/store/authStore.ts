@@ -16,6 +16,7 @@ interface IAuthStore {
   errorMessage: string;
 
   setTypeOfAuthForm: (flag: boolean) => void;
+  setErrorMassageToDefault: () => void;
   signUp: (data: ISignUp) => Promise<void>;
   signIn: () => Promise<void>;
 }
@@ -29,9 +30,16 @@ export const authStore = create<IAuthStore>((set, get) => ({
     set({ isSignInForm: flag });
   },
 
+  setErrorMassageToDefault: () => {
+    set({ errorMessage: "" });
+  },
+
   signUp: async (data: ISignUp) => {
     try {
+      get().setErrorMassageToDefault();
+
       set({ isAuthorizing: true });
+
       const response = await signup(data);
       console.log(response);
 

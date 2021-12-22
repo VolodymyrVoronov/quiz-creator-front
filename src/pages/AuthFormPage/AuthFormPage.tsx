@@ -11,6 +11,7 @@ import {
   Box,
   Avatar,
   Divider,
+  useToasts,
 } from "bumbag";
 import { motion } from "framer-motion";
 import { ImEnvelop, ImLock, ImUser } from "react-icons/im";
@@ -32,7 +33,14 @@ interface IFormState {
 const AuthFormPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
 
-  const { isSignInForm, isAuthorizing, signIn, signUp } = authStore();
+  const {
+    isSignInForm,
+    isAuthorizing,
+    errorMessage,
+    signIn,
+    signUp,
+    setErrorMassageToDefault,
+  } = authStore();
   const { avatars } = appStore();
 
   const initialFormState = isSignInForm
@@ -53,24 +61,12 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     if (isSignInForm === undefined) {
       navigation(Paths.AuthPage);
     }
-  }, [navigation]);
+  }, []);
 
   useEffect(() => {
     const onKeyPress = (e: { keyCode: number }) => {
       if (e.keyCode === 27) {
-        setFormData(
-          isSignInForm
-            ? {
-                email: "",
-                password: "",
-              }
-            : {
-                avatar: "",
-                email: "",
-                password: "",
-                passwordConfirm: "",
-              }
-        );
+        setFormData(initialFormState);
       }
     };
 
@@ -118,6 +114,10 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     }
   };
 
+  const onBackButtonClick = () => {
+    setErrorMassageToDefault();
+  };
+
   console.log(isAuthorizing);
 
   const areFormFieldsEmpty = isSignInForm
@@ -156,7 +156,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
           "min-fullHD": "50px",
         }}
       >
-        <BackButton routeName={Paths.AuthPage} />
+        <BackButton routeName={Paths.AuthPage} onClick={onBackButtonClick} />
         <Card width="600px" variant="shadowed">
           <motion.span
             initial={{ opacity: 0 }}
@@ -371,6 +371,17 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               </Set>
             </Stack>
           </Flex>
+          {errorMessage ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ ease: "easeOut", duration: 2 }}
+            >
+              <Box marginTop="10px">
+                <Text fontWeight={400} color="danger">{errorMessage}</Text>
+              </Box>
+            </motion.div>
+          ) : null}
         </Card>
       </Flex>
     </motion.div>

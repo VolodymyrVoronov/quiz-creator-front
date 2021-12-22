@@ -9,9 +9,13 @@ import styles from "./BackButton.module.css";
 
 interface IBackButtonProps {
   routeName: string;
+  onClick?: () => void;
 }
 
-const BackButton: FC<IBackButtonProps> = ({ routeName }): JSX.Element => {
+const BackButton: FC<IBackButtonProps> = ({
+  routeName,
+  onClick,
+}): JSX.Element => {
   const portalContainer = document.getElementById("back-button") as HTMLElement;
 
   return ReactDOM.createPortal(
@@ -21,7 +25,7 @@ const BackButton: FC<IBackButtonProps> = ({ routeName }): JSX.Element => {
       transition={{ ease: "easeOut", duration: 2 }}
       className={styles.backButton}
     >
-      <Link to={routeName}>
+      <Link to={routeName} onClick={onClick}>
         <Button
           palette="primary"
           borderRadius="50%"
