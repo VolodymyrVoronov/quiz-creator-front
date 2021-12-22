@@ -17,3 +17,18 @@ instanceAPI.interceptors.request.use((req) => {
 
   return req;
 });
+
+const signup = (data: {
+  avatar?: string;
+  email: string;
+  password: string;
+  passwordConfirm?: string;
+}) => {
+  return instanceAPI.post("/signup", data);
+};
+
+const signin = (data: { email: string; password: string }) => {
+  return instanceAPI.post("/signin", data);
+};
+
+export { signup, signin };

@@ -15,8 +15,8 @@ import {
 import { motion } from "framer-motion";
 import { ImEnvelop, ImLock, ImUser } from "react-icons/im";
 
-import authStore from "store/authStore";
-import appStore from "store/appStore";
+import { authStore } from "store/authStore";
+import { appStore } from "store/appStore";
 
 import Paths from "const/path";
 
@@ -32,7 +32,10 @@ interface IFormState {
 const AuthFormPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
 
-  const initialFormState = authStore.isSignInForm
+  const { isSignInForm, isAuthorizing, signIn, signUp } = authStore();
+  const { avatars } = appStore();
+
+  const initialFormState = isSignInForm
     ? {
         email: "",
         password: "",
@@ -47,7 +50,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
   const [formData, setFormData] = useState<IFormState>(initialFormState);
 
   useEffect(() => {
-    if (authStore.isSignInForm === undefined) {
+    if (isSignInForm === undefined) {
       navigation(Paths.AuthPage);
     }
   }, [navigation]);
@@ -56,7 +59,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     const onKeyPress = (e: { keyCode: number }) => {
       if (e.keyCode === 27) {
         setFormData(
-          authStore.isSignInForm
+          isSignInForm
             ? {
                 email: "",
                 password: "",
@@ -107,16 +110,24 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
 
   const onAuthButtonClick = () => {
     console.log(formData);
+
+    if (isSignInForm) {
+      // signIn(formData);
+    } else {
+      signUp(formData);
+    }
   };
 
-  const areFormFieldsEmpty = authStore.isSignInForm
+  console.log(isAuthorizing);
+
+  const areFormFieldsEmpty = isSignInForm
     ? formData.email.length === 0 || formData.password.length === 0
     : formData.email.length === 0 ||
       formData.password.length === 0 ||
       formData.passwordConfirm?.length === 0 ||
       formData.avatar?.length === 0;
 
-  const isOneOfTheFormFieldEmpty = authStore.isSignInForm
+  const isOneOfTheFormFieldEmpty = isSignInForm
     ? formData.email.length === 0 && formData.password.length === 0
     : formData.email.length === 0 &&
       formData.password.length === 0 &&
@@ -160,14 +171,14 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               }}
               fontWeight="bold"
             >
-              {authStore.isSignInForm ? "Sign In" : "Sign Up"}
+              {isSignInForm ? "Sign In" : "Sign Up"}
             </Text>
           </motion.span>
 
           <Divider marginTop="10px" />
 
           <Flex flexDirection="column" marginTop="25px">
-            {!authStore.isSignInForm ? (
+            {!isSignInForm ? (
               <Flex flexDirection="row" marginBottom="15px">
                 <Flex
                   flexDirection="column"
@@ -207,7 +218,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
 
                 <Flex>
                   <Flex flexDirection="row" flexWrap="wrap">
-                    {appStore.avatars.map((avatarItem, i) => {
+                    {avatars.map((avatarItem, i) => {
                       const { id, avatar, imageAlt } = avatarItem;
                       return (
                         <motion.span
@@ -285,7 +296,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                     alignX="center"
                     marginX="11px"
                     color={
-                      !authStore.isSignInForm
+                      !isSignInForm
                         ? arePasswordsMatch && formData.password.length > 0
                           ? "#67C6B9"
                           : formData.password.length > 0
@@ -300,7 +311,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                 aria-label="Password field"
               />
 
-              {!authStore.isSignInForm ? (
+              {!isSignInForm ? (
                 <Input
                   onChange={onFormInputChange}
                   value={formData.passwordConfirm}
@@ -316,7 +327,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                       alignX="center"
                       marginX="11px"
                       color={
-                        !authStore.isSignInForm &&
+                        !isSignInForm &&
                         formData.passwordConfirm &&
                         arePasswordsMatch &&
                         formData.passwordConfirm?.length > 0
@@ -340,7 +351,6 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   color="white"
                   type="button"
                   flexGrow="1"
-                  isLoading={false}
                   disabled={isOneOfTheFormFieldEmpty}
                   aria-label="Clear all fields"
                 >
@@ -352,11 +362,11 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                   color="white"
                   type="button"
                   flexGrow="1"
-                  isLoading={false}
+                  isLoading={isAuthorizing}
                   disabled={areFormFieldsEmpty}
-                  aria-label={authStore.isSignInForm ? "Sign In" : "Sign Up"}
+                  aria-label={isSignInForm ? "Sign In" : "Sign Up"}
                 >
-                  {authStore.isSignInForm ? "Sign In" : "Sign Up"}
+                  {isSignInForm ? "Sign In" : "Sign Up"}
                 </Button>
               </Set>
             </Stack>

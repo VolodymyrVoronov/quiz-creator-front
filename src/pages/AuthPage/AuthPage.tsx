@@ -2,7 +2,7 @@ import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ImEnter, ImKey2 } from "react-icons/im";
 
-import authStore from "store/authStore";
+import { authStore } from "store/authStore";
 
 import Paths from "const/path";
 
@@ -12,14 +12,16 @@ import PageLayout from "components/PageLayout/PageLayout";
 const AuthPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
 
+  const { setTypeOfAuthForm } = authStore();
+
   const onSingInButtonClick = () => {
-    authStore.setTypeOfAuthForm(true);
+    setTypeOfAuthForm(true);
 
     navigation(Paths.AuthFormPage);
   };
 
   const onSingUpButtonClick = () => {
-    authStore.setTypeOfAuthForm(false);
+    setTypeOfAuthForm(false);
 
     navigation(Paths.AuthFormPage);
   };

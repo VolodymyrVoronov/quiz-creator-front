@@ -1,4 +1,4 @@
-import { observable, computed, action } from "mobx";
+import create from "zustand";
 
 import avatarsData from "../data/avatarsData";
 
@@ -8,8 +8,12 @@ interface IAvatars {
   imageAlt: string;
 }
 
-class appStore {
-  @observable avatars: IAvatars[] = [
+interface IAppStore {
+  avatars: IAvatars[];
+}
+
+export const appStore = create<IAppStore>((set, get) => ({
+  avatars: [
     {
       id: 1,
       avatar: avatarsData.bear,
@@ -60,12 +64,5 @@ class appStore {
       avatar: avatarsData.fox,
       imageAlt: "Fox",
     },
-  ];
-
-  @computed
-  get getAvatars() {
-    return this.avatars;
-  }
-}
-
-export default new appStore();
+  ],
+}));

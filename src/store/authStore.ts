@@ -1,18 +1,49 @@
-import { observable, computed, action } from "mobx";
+import create from "zustand";
+import axios from "axios";
 
-class authStore {
-  @observable isAuthorizing: boolean = false;
-  @observable isSignInForm: boolean | undefined = undefined;
+import { signup, signin } from "api/api";
 
-  @computed
-  get getTypeOfForm() {
-    return this.isSignInForm;
-  }
-
-  @action.bound
-  setTypeOfAuthForm = (flag: boolean) => {
-    this.isSignInForm = flag;
-  };
+interface ISignUp {
+  avatar?: string;
+  email: string;
+  password: string;
+  passwordConfirm?: string;
 }
 
-export default new authStore();
+interface IAuthStore {
+  isAuthorizing: boolean;
+  isSignInForm: boolean | undefined;
+  errorMessage: string;
+
+  setTypeOfAuthForm: (flag: boolean) => void;
+  signUp: (data: ISignUp) => Promise<void>;
+  signIn: () => Promise<void>;
+}
+
+export const authStore = create<IAuthStore>((set, get) => ({
+  isAuthorizing: false,
+  isSignInForm: undefined,
+  errorMessage: "",
+
+  setTypeOfAuthForm: (flag: boolean) => {
+    set({ isSignInForm: flag });
+  },
+
+  signUp: async (data: ISignUp) => {
+    try {
+      set({ isAuthorizing: true });
+      const response = await signup(data);
+      console.log(response);
+
+      set({ isAuthorizing: false });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.log(e?.response?.data.message);
+        set({ errorMessage: e?.response?.data.message });
+
+        set({ isAuthorizing: false });
+      }
+    }
+  },
+  signIn: async () => {},
+}));
