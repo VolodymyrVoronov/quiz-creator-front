@@ -107,7 +107,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
     // console.log(formData);
 
     if (isSignInForm) {
-      // signIn(formData, navigation);
+      signIn(formData, navigation);
     } else {
       signUp(formData, navigation);
     }

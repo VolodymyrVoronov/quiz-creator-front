@@ -84,5 +84,35 @@ export const authStore = create<IAuthStore>((set, get) => ({
       }
     }
   },
-  signIn: async () => {},
+
+  signIn: async (data: ISignIn, navigation) => {
+    try {
+      get().setErrorMassageToDefault();
+
+      set({ isAuthorizing: true });
+
+      const response = await signin(data);
+      console.log(response);
+
+      if (response.status === 200) {
+        set({ userData: response.data.result });
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(await { ...response.data.result })
+        );
+
+        navigation(Paths.QuizCreator);
+      }
+
+      set({ isAuthorizing: false });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.log(e?.response?.data.message);
+        set({ errorMessage: e?.response?.data.message });
+
+        set({ isAuthorizing: false });
+      }
+    }
+  },
 }));
