@@ -11,7 +11,6 @@ import {
   Box,
   Avatar,
   Divider,
-  useToasts,
 } from "bumbag";
 import { motion } from "framer-motion";
 import { ImEnvelop, ImLock, ImUser } from "react-icons/im";
@@ -105,20 +104,18 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
   };
 
   const onAuthButtonClick = () => {
-    console.log(formData);
+    // console.log(formData);
 
     if (isSignInForm) {
-      // signIn(formData);
+      // signIn(formData, navigation);
     } else {
-      signUp(formData);
+      signUp(formData, navigation);
     }
   };
 
   const onBackButtonClick = () => {
     setErrorMassageToDefault();
   };
-
-  console.log(isAuthorizing);
 
   const areFormFieldsEmpty = isSignInForm
     ? formData.email.length === 0 || formData.password.length === 0
@@ -378,7 +375,9 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               transition={{ ease: "easeOut", duration: 2 }}
             >
               <Box marginTop="10px">
-                <Text fontWeight={400} color="danger">{errorMessage}</Text>
+                <Text fontWeight={400} color="danger">
+                  {errorMessage}
+                </Text>
               </Box>
             </motion.div>
           ) : null}

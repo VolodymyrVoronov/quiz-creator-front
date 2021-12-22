@@ -1,7 +1,9 @@
 import create from "zustand";
 import axios from "axios";
+import { NavigateFunction } from "react-router-dom";
 
 import { signup, signin } from "api/api";
+import Paths from "const/path";
 
 interface ISignUp {
   avatar?: string;
@@ -10,21 +12,35 @@ interface ISignUp {
   passwordConfirm?: string;
 }
 
+interface ISignIn {
+  email: string;
+  password: string;
+}
+
+interface IUserData {
+  avatar?: string;
+  email?: string;
+  token?: string;
+}
+
 interface IAuthStore {
   isAuthorizing: boolean;
   isSignInForm: boolean | undefined;
   errorMessage: string;
+  userData: IUserData;
 
   setTypeOfAuthForm: (flag: boolean) => void;
   setErrorMassageToDefault: () => void;
-  signUp: (data: ISignUp) => Promise<void>;
-  signIn: () => Promise<void>;
+  setUserData: (userData: IUserData) => void;
+  signUp: (data: ISignUp, navigation: NavigateFunction) => Promise<void>;
+  signIn: (data: ISignIn, navigation: NavigateFunction) => Promise<void>;
 }
 
 export const authStore = create<IAuthStore>((set, get) => ({
   isAuthorizing: false,
   isSignInForm: undefined,
   errorMessage: "",
+  userData: {},
 
   setTypeOfAuthForm: (flag: boolean) => {
     set({ isSignInForm: flag });
@@ -34,7 +50,11 @@ export const authStore = create<IAuthStore>((set, get) => ({
     set({ errorMessage: "" });
   },
 
-  signUp: async (data: ISignUp) => {
+  setUserData: (data: IUserData) => {
+    set({ userData: data });
+  },
+
+  signUp: async (data: ISignUp, navigation) => {
     try {
       get().setErrorMassageToDefault();
 
@@ -42,6 +62,17 @@ export const authStore = create<IAuthStore>((set, get) => ({
 
       const response = await signup(data);
       console.log(response);
+
+      if (response.status === 200) {
+        set({ userData: response.data.result });
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(await { ...response.data.result })
+        );
+
+        navigation(Paths.QuizCreator);
+      }
 
       set({ isAuthorizing: false });
     } catch (e) {
