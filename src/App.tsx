@@ -26,6 +26,11 @@ const AuthFormPage = lazy(
   () => import(/* webpackPrefetch: true */ "pages/AuthFormPage/AuthFormPage")
 );
 
+const QuizCreatorPage = lazy(
+  () =>
+    import(/* webpackPrefetch: true */ "pages/QuizCreatorPage/QuizCreatorPage")
+);
+
 const App: FC<{}> = (): JSX.Element => {
   const toasts = useToasts();
   const navigation = useNavigate();
@@ -75,7 +80,7 @@ const App: FC<{}> = (): JSX.Element => {
           <Route path={Paths.AuthPage} element={<AuthPage />} />
           <Route path={Paths.AuthFormPage} element={<AuthFormPage />} />
           <Route path={Paths.AllQuizzesPage} element={<AllQuizzesPage />} />
-          <Route path={Paths.QuizCreator} element={<p>Quiz Creator</p>} />
+          <Route path={Paths.QuizCreator} element={<QuizCreatorPage />} />
           <Route path={Paths.NoPage} element={<p>Nothing found.</p>} />
         </Routes>
       </Suspense>

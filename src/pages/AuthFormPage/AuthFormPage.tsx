@@ -245,7 +245,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                             }}
                             tabIndex={0}
                             margin={{
-                              "min-mobile": "3px",
+                              "min-mobile": "2px",
                               "min-tablet": "3px",
                               "min-desktop": "8px",
                               "min-widescreen": "11px",
