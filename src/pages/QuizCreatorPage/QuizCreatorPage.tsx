@@ -1,5 +1,5 @@
-import { FC, Fragment, useRef } from "react";
-import { Button, Card, Divider, Flex, Heading, Set, Text } from "bumbag";
+import { FC, useRef } from "react";
+import { Card, Divider, Flex, Heading, Set, Text } from "bumbag";
 import { ImPlus } from "react-icons/im";
 import { motion } from "framer-motion";
 
@@ -10,6 +10,7 @@ import Paths from "const/path";
 import QuizCreatorTitleEditor from "components/QuizCreatorTitleEditor/QuizCreatorTitleEditor";
 import QuizCreatorQuestionEditor from "components/QuizCreatorQuestionEditor/QuizCreatorQuestionEditor";
 import BackButton from "components/common/BackButton/BackButton";
+import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 
 // import styles from "./QuizCreatorPage.module.css";
 
@@ -82,7 +83,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
           </Heading>
           {quiz.length === 0 && (
             <Flex justifyContent="center" marginTop="25px">
-              <Button
+              <QuizCreatorButton
                 onClick={onCrateNewQuizButtonClick}
                 palette="primary"
                 color="white"
@@ -91,7 +92,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                 <Text display="flex" fontSize="14px" marginLeft="10px">
                   <ImPlus />
                 </Text>
-              </Button>
+              </QuizCreatorButton>
             </Flex>
           )}
 
@@ -127,16 +128,19 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
         {quiz.length !== 0 && (
           <Card width="100%" marginTop="15px" ref={divRef}>
             <Set spacing="minor-5">
-              <Button
+              <QuizCreatorButton
                 onClick={onAddNewQuestionButtonClick}
                 palette="secondary"
-                type="button"
-              >
-                Added new question
-              </Button>
-              <Button palette="success" type="button" color="white">
-                Save quiz
-              </Button>
+                color="white"
+                buttonText="Added new question"
+              />
+
+              <QuizCreatorButton
+                onClick={onAddNewQuestionButtonClick}
+                palette="success"
+                color="white"
+                buttonText="Save quiz"
+              />
             </Set>
           </Card>
         )}

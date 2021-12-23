@@ -1,11 +1,12 @@
 import React, { FC, useCallback, useState } from "react";
-import { Button, Flex, Input, Text } from "bumbag";
+import { Flex, Input, Text } from "bumbag";
 import { motion } from "framer-motion";
 
 import { IOption, quizStore } from "store/quizStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 import QuizCreatorQuestionOptionEditor from "components/QuizCreatorQuestionOptionEditor/QuizCreatorQuestionOptionEditor";
+import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 
 interface IQuizCreatorTitleEditorProps {
   questionId: string;
@@ -127,6 +128,7 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
                   answerOption={answerOption}
                   correct={correct}
                   userAnswer={userAnswer}
+                  amountOfAnswerOptions={options.length}
                 />
               </motion.article>
             );
@@ -135,16 +137,14 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
       </Flex>
 
       <Flex>
-        <Button
+        <QuizCreatorButton
           onClick={onAddNewAnswerOptionButtonClick}
-          marginTop="15px"
+          mt="15px"
           size="small"
           palette="success"
           color="white"
-          type="button"
-        >
-          Add new answer option
-        </Button>
+          buttonText="Add new answer option"
+        />
       </Flex>
     </Flex>
   );

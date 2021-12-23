@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, ReactNode } from "react";
 import { Button } from "bumbag";
 
 interface IQuizCreatorButtonProps {
@@ -15,7 +15,12 @@ interface IQuizCreatorButtonProps {
     | "dark";
   color?: string;
   size?: "small" | "medium" | "large";
-  buttonText: string;
+  buttonText?: string;
+  children?: ReactNode;
+  mt?: any;
+  mr?: any;
+  ml?: any;
+  mb?: any;
 }
 
 const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
@@ -25,6 +30,11 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
   color,
   size,
   buttonText,
+  children,
+  mt,
+  mr,
+  ml,
+  mb,
 }): JSX.Element => {
   return (
     <Button
@@ -34,8 +44,13 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
       color={color}
       disabled={isButtonDisabled}
       type="button"
+      marginTop={mt}
+      marginRight={mr}
+      marginLeft={ml}
+      marginBottom={mb}
     >
       {buttonText}
+      {children}
     </Button>
   );
 };

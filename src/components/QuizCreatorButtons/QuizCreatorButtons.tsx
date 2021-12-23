@@ -11,6 +11,9 @@ interface IQuizCreatorButtonsProps {
   onClearButtonClick: () => void;
   isButtonDisabled: boolean;
   mt?: any;
+  mr?: any;
+  ml?: any;
+  mb?: any;
 }
 
 const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
@@ -21,9 +24,12 @@ const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
   onClearButtonClick,
   isButtonDisabled,
   mt = "5px",
+  mr,
+  ml,
+  mb,
 }): JSX.Element => {
   return (
-    <Set marginTop={mt}>
+    <Set marginTop={mt} marginRight={mr} marginLeft={ml} marginBottom={mb}>
       <QuizCreatorButton
         isButtonDisabled={editingMode}
         onClick={onEditButtonClick}
@@ -52,8 +58,7 @@ const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
           <QuizCreatorButton
             onClick={onClearButtonClick}
             size="small"
-            palette="danger"
-            color="white"
+            palette="warning"
             isButtonDisabled={isButtonDisabled}
             buttonText="Clear"
           />

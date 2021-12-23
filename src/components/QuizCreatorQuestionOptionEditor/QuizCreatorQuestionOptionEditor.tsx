@@ -4,6 +4,8 @@ import { FC, Fragment, memo, useCallback, useState } from "react";
 import { quizStore } from "store/quizStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
+import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
+import { ImBin } from "react-icons/im";
 
 interface IQuizCreatorQuestionOptionEditorProps {
   index: number;
@@ -12,6 +14,7 @@ interface IQuizCreatorQuestionOptionEditorProps {
   answerOption: string;
   correct: boolean;
   userAnswer: boolean;
+  amountOfAnswerOptions: number;
 }
 
 const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps> =
@@ -22,8 +25,9 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
     answerOption,
     correct,
     userAnswer,
+    amountOfAnswerOptions,
   }): JSX.Element => {
-    const { updateAnswerOption } = quizStore();
+    const { updateAnswerOption, quiz } = quizStore();
 
     const [editingMode, setEditingMode] = useState<boolean>(false);
     const [answerOptionText, setQuizTitle] = useState<string>("Quiz title");
@@ -111,6 +115,18 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
           isButtonDisabled={answerOptionText.length === 0}
           mt={0}
         />
+
+        {amountOfAnswerOptions > 2 && (
+          <QuizCreatorButton
+            onClick={() => {}}
+            size="small"
+            palette="danger"
+            color="white"
+            ml="10px"
+          >
+            <ImBin />
+          </QuizCreatorButton>
+        )}
       </Flex>
     );
   };
