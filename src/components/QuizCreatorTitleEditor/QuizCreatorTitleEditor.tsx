@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import { Flex, Input, Text } from "bumbag";
+import { motion } from "framer-motion";
 
 import { quizStore } from "store/quizStore";
 
@@ -30,50 +31,59 @@ const QuizCreatorTitleEditor: FC<{}> = (): JSX.Element => {
     setQuizTitle(() => "");
   }, []);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const title = e.target.value;
+  const onInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const title = e.target.value;
 
-    setQuizTitle(title);
-  };
+      setQuizTitle(title);
+    },
+    []
+  );
 
   return (
-    <Flex width="100%" flexDirection="column">
-      <Text>Quiz title:</Text>
-      {editingMode ? (
-        <Input
-          onChange={onInputChange}
-          value={quizTitle}
-          marginRight="20px"
-          fontSize={{
-            "min-mobile": "18px",
-            "min-desktop": "20px",
-            "min-fullHD": "24px",
-          }}
-          name="Quiz title"
-        />
-      ) : (
-        <Text
-          marginRight="20px"
-          fontSize={{
-            "min-mobile": "20px",
-            "min-desktop": "28px",
-            "min-fullHD": "38px",
-          }}
-          fontWeight="bold"
-        >
-          {quiz[0].quizTitle}
-        </Text>
-      )}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ ease: "easeOut", duration: 2 }}
+    >
+      <Flex width="100%" flexDirection="column">
+        <Text>Quiz title:</Text>
+        {editingMode ? (
+          <Input
+            onChange={onInputChange}
+            value={quizTitle}
+            marginRight="20px"
+            fontSize={{
+              "min-mobile": "18px",
+              "min-desktop": "20px",
+              "min-fullHD": "24px",
+            }}
+            name="Quiz title"
+          />
+        ) : (
+          <Text
+            marginRight="20px"
+            fontSize={{
+              "min-mobile": "20px",
+              "min-desktop": "28px",
+              "min-fullHD": "38px",
+            }}
+            fontWeight="bold"
+          >
+            {quiz[0].quizTitle}
+          </Text>
+        )}
 
-      <QuizCreatorButtons
-        editingMode={editingMode}
-        onEditButtonClick={onEditButtonClick}
-        onSaveButtonClick={onSaveButtonClick}
-        onCancelButtonClick={onCancelButtonClick}
-        onClearButtonClick={onClearButtonClick}
-        isButtonDisabled={quizTitle.length === 0}
-      />
-    </Flex>
+        <QuizCreatorButtons
+          editingMode={editingMode}
+          onEditButtonClick={onEditButtonClick}
+          onSaveButtonClick={onSaveButtonClick}
+          onCancelButtonClick={onCancelButtonClick}
+          onClearButtonClick={onClearButtonClick}
+          isButtonDisabled={quizTitle.length === 0}
+        />
+      </Flex>
+    </motion.div>
   );
 };
 

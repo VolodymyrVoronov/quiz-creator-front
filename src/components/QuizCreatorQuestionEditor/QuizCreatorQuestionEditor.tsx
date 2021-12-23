@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import { Button, Flex, Input, Text } from "bumbag";
+import { motion } from "framer-motion";
 
 import { IOption, quizStore } from "store/quizStore";
 
@@ -41,14 +42,33 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
     setQuizTitle(() => "");
   }, []);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const title = e.target.value;
+  const onInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const title = e.target.value;
 
-    setQuizTitle(title);
-  };
+      setQuizTitle(title);
+    },
+    []
+  );
 
   const onAddNewAnswerOptionButtonClick = (): void => {
     addNewAnswerOption(questionId);
+  };
+
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+    },
+  };
+
+  const item = {
+    hidden: { x: -100, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+    },
   };
 
   return (
@@ -90,21 +110,28 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
       />
 
       <Flex flexDirection="column" marginTop="25px">
-        {options.map((option, index) => {
-          const { id, answerOption, correct, userAnswer } = option;
+        <motion.section
+          variants={container}
+          initial="hidden"
+          animate={options.length > 0 && "visible"}
+        >
+          {options.map((option, index) => {
+            const { id, answerOption, correct, userAnswer } = option;
 
-          return (
-            <QuizCreatorQuestionOptionEditor
-              key={id}
-              index={index}
-              id={id}
-              questionId={questionId}
-              answerOption={answerOption}
-              correct={correct}
-              userAnswer={userAnswer}
-            />
-          );
-        })}
+            return (
+              <motion.article key={id} variants={item}>
+                <QuizCreatorQuestionOptionEditor
+                  index={index}
+                  id={id}
+                  questionId={questionId}
+                  answerOption={answerOption}
+                  correct={correct}
+                  userAnswer={userAnswer}
+                />
+              </motion.article>
+            );
+          })}
+        </motion.section>
       </Flex>
 
       <Flex>

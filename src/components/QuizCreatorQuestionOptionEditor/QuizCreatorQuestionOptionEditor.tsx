@@ -1,5 +1,5 @@
 import { Checkbox, Flex, Input, Text } from "bumbag";
-import { FC, Fragment, useCallback, useState } from "react";
+import { FC, Fragment, memo, useCallback, useState } from "react";
 
 import { quizStore } from "store/quizStore";
 
@@ -48,16 +48,18 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
       setQuizTitle(() => "");
     }, []);
 
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const title = e.target.value;
+    const onInputChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        const title = e.target.value;
 
-      setQuizTitle(title);
-    };
+        setQuizTitle(title);
+      },
+      []
+    );
 
     const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.checked;
 
-      console.log(value);
       setChecked(value);
       updateAnswerOption(value, id, questionId);
     };
@@ -113,4 +115,4 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
     );
   };
 
-export default QuizCreatorQuestionOptionEditor;
+export default memo(QuizCreatorQuestionOptionEditor);
