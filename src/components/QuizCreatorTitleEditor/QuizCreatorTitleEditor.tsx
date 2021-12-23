@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { Flex, Input, Text } from "bumbag";
 
 import { quizStore } from "store/quizStore";
@@ -6,28 +6,29 @@ import { quizStore } from "store/quizStore";
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 
 const QuizCreatorTitleEditor: FC<{}> = (): JSX.Element => {
-  const { updatedQuiz, quiz } = quizStore();
+  const { updateQuiz, quiz } = quizStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
   const [quizTitle, setQuizTitle] = useState<string>("Quiz title");
 
-  const onEditButtonClick = () => {
+  const onEditButtonClick = useCallback(() => {
     setEditingMode(() => true);
-  };
+    setQuizTitle(() => quiz[0].quizTitle);
+  }, [quiz]);
 
-  const onSaveButtonClick = () => {
+  const onSaveButtonClick = useCallback(() => {
     setEditingMode(() => false);
 
-    updatedQuiz(quizTitle, quiz[0].id);
-  };
+    updateQuiz(quizTitle, quiz[0].id);
+  }, [quiz, quizTitle, updateQuiz]);
 
-  const onCancelButtonClick = () => {
+  const onCancelButtonClick = useCallback(() => {
     setEditingMode(() => false);
-  };
+  }, []);
 
-  const onClearButtonClick = () => {
+  const onClearButtonClick = useCallback(() => {
     setQuizTitle(() => "");
-  };
+  }, []);
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value;

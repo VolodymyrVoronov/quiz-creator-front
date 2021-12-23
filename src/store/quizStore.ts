@@ -1,9 +1,14 @@
 import create from "zustand";
-import uniqid from "uniqid";
 
-interface IOption {
+import {
+  createNewAnswerOption,
+  createNewQuestion,
+  createNewQuiz,
+} from "helpers/quizStore";
+
+export interface IOption {
   id: string;
-  optionTest: string;
+  answerOption: string;
   correct: boolean;
   userAnswer: boolean;
 }
@@ -24,7 +29,15 @@ interface IQuizStore {
   quiz: IQuiz[];
   isLoading: boolean;
   createNewQuiz: () => void;
-  updatedQuiz: (data: string, id: string) => void;
+  updateQuiz: (data: string, id: string) => void;
+  updateQuestion: (data: string, id: string) => void;
+  updateAnswerOption: (
+    data: string | boolean,
+    answerOptionId: string,
+    questionId: string
+  ) => void;
+  addNewAnswerOption: (questionId: string) => void;
+  addNewQuestion: (quizId: string) => void;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
@@ -33,30 +46,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
 
   createNewQuiz: () => {
     set((state) => {
-      const newQuiz = {
-        id: uniqid(),
-        quizTitle: "Quiz title",
-        questions: [
-          {
-            id: uniqid(),
-            question: "Question",
-            options: [
-              {
-                id: uniqid(),
-                optionTest: "Option 1",
-                correct: false,
-                userAnswer: false,
-              },
-              {
-                id: uniqid(),
-                optionTest: "Option 2",
-                correct: false,
-                userAnswer: false,
-              },
-            ],
-          },
-        ],
-      };
+      const newQuiz = createNewQuiz();
 
       return {
         ...state,
@@ -65,13 +55,143 @@ export const quizStore = create<IQuizStore>((set, get) => ({
     });
   },
 
-  updatedQuiz: (data: string, id: string) => {
+  updateQuiz: (data: string, id: string) => {
     set((state) => {
       const updatedQuiz = state.quiz.map((quiz) => {
         if (quiz.id === id) {
           return {
             ...quiz,
             quizTitle: data,
+          };
+        }
+
+        return quiz;
+      });
+
+      return {
+        ...state,
+        quiz: updatedQuiz,
+      };
+    });
+  },
+
+  updateQuestion: (data: string, id: string) => {
+    console.log(data, id);
+    set((state) => {
+      const updateQuiz = state.quiz.map((quiz) => {
+        const updatedQuestions = quiz.questions.map((question) => {
+          if (question.id === id) {
+            return {
+              ...question,
+              question: data,
+            };
+          }
+
+          return question;
+        });
+
+        return {
+          ...quiz,
+          questions: updatedQuestions,
+        };
+      });
+
+      return {
+        ...state,
+        quiz: updateQuiz,
+      };
+    });
+  },
+
+  updateAnswerOption: (
+    data: string | boolean,
+    answerOptionId: string,
+    questionId: string
+  ) => {
+    set((state) => {
+      const updatedQuiz = state.quiz.map((quiz) => {
+        const updatedQuestions: IQuestion[] = quiz.questions.map((question) => {
+          if (question.id === questionId) {
+            const updatedOptions = question.options.map((option) => {
+              if (option.id === answerOptionId) {
+                if (typeof data === "string") {
+                  return {
+                    ...option,
+                    answerOption: data,
+                  };
+                }
+
+                if (typeof data === "boolean") {
+                  return {
+                    ...option,
+                    correct: data,
+                  };
+                }
+              }
+
+              return option;
+            });
+
+            return {
+              ...question,
+              options: updatedOptions,
+            };
+          }
+
+          return question;
+        });
+
+        return {
+          ...quiz,
+          questions: updatedQuestions,
+        };
+      });
+
+      return {
+        ...state,
+        quiz: updatedQuiz,
+      };
+    });
+  },
+
+  addNewAnswerOption: (questionId: string) => {
+    set((state) => {
+      const updatedQuiz = state.quiz.map((quiz) => {
+        const updatedQuestions = quiz.questions.map((question) => {
+          if (question.id === questionId) {
+            const newOption: IOption = createNewAnswerOption();
+
+            return {
+              ...question,
+              options: [...question.options, newOption],
+            };
+          }
+
+          return question;
+        });
+
+        return {
+          ...quiz,
+          questions: updatedQuestions,
+        };
+      });
+
+      return {
+        ...state,
+        quiz: updatedQuiz,
+      };
+    });
+  },
+
+  addNewQuestion: (quizId: string) => {
+    set((state) => {
+      const updatedQuiz = state.quiz.map((quiz) => {
+        if (quiz.id === quizId) {
+          const newQuestion: IQuestion = createNewQuestion();
+
+          return {
+            ...quiz,
+            questions: [...quiz.questions, newQuestion],
           };
         }
 

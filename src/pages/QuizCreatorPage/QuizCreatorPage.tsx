@@ -1,26 +1,31 @@
-import { FC } from "react";
-import { Button, Card, Flex, Heading, Text } from "bumbag";
+import { FC, Fragment } from "react";
+import { Button, Card, Divider, Flex, Heading, Set, Text } from "bumbag";
 
 import { ImPlus } from "react-icons/im";
 
 import { quizStore } from "store/quizStore";
 
 import QuizCreatorTitleEditor from "components/QuizCreatorTitleEditor/QuizCreatorTitleEditor";
+import QuizCreatorQuestionEditor from "components/QuizCreatorQuestionEditor/QuizCreatorQuestionEditor";
 
 // import styles from "./QuizCreatorPage.module.css";
 
 const QuizCreatorPage: FC<{}> = (): JSX.Element => {
-  const { createNewQuiz, quiz } = quizStore();
+  const { createNewQuiz, addNewQuestion, quiz } = quizStore();
 
   const onCrateNewQuizButtonClick = () => {
     createNewQuiz();
+  };
+
+  const onAddNewQuestionButtonClick = () => {
+    addNewQuestion(quiz[0].id);
   };
 
   console.log(quiz);
 
   return (
     <Flex
-      flexDirection="row"
+      flexDirection="column"
       justifyContent="center"
       paddingY={{
         "min-mobile": "75px",
@@ -53,11 +58,44 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
         )}
 
         {quiz.length !== 0 && (
-          <Flex width="100%" marginTop="25px">
+          <Flex width="100%" marginTop="25px" flexDirection="column">
             <QuizCreatorTitleEditor />
+
+            <Divider marginY="25px" />
+
+            {quiz[0].questions.map((questionItem) => {
+              const { id, question, options } = questionItem;
+
+              return (
+                <Fragment key={id}>
+                  <QuizCreatorQuestionEditor
+                    questionId={id}
+                    question={question}
+                    options={options}
+                  />
+                  <Divider marginY="25px" />
+                </Fragment>
+              );
+            })}
           </Flex>
         )}
       </Card>
+      {quiz.length !== 0 && (
+        <Card width="100%" marginTop="15px">
+          <Set spacing="minor-5">
+            <Button
+              onClick={onAddNewQuestionButtonClick}
+              palette="secondary"
+              type="button"
+            >
+              Added new question
+            </Button>
+            <Button palette="success" type="button" color="white">
+              Save quiz
+            </Button>
+          </Set>
+        </Card>
+      )}
     </Flex>
   );
 };

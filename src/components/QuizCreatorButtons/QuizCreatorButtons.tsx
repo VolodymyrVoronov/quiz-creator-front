@@ -1,5 +1,7 @@
 import { FC, Fragment } from "react";
-import { Button, Set } from "bumbag";
+import { Set } from "bumbag";
+
+import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 
 interface IQuizCreatorButtonsProps {
   editingMode: boolean;
@@ -8,6 +10,7 @@ interface IQuizCreatorButtonsProps {
   onCancelButtonClick: () => void;
   onClearButtonClick: () => void;
   isButtonDisabled: boolean;
+  mt?: any;
 }
 
 const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
@@ -17,40 +20,43 @@ const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
   onCancelButtonClick,
   onClearButtonClick,
   isButtonDisabled,
+  mt = "5px",
 }): JSX.Element => {
   return (
-    <Set marginTop="5px">
-      <Button disabled={editingMode} onClick={onEditButtonClick} size="small">
-        Edit
-      </Button>
+    <Set marginTop={mt}>
+      <QuizCreatorButton
+        isButtonDisabled={editingMode}
+        onClick={onEditButtonClick}
+        size="small"
+        buttonText="Edit"
+      />
 
       {editingMode && (
         <Fragment>
-          <Button
+          <QuizCreatorButton
             onClick={onSaveButtonClick}
             size="small"
             palette="success"
             color="white"
-            disabled={isButtonDisabled}
-          >
-            Save
-          </Button>
-          <Button
+            isButtonDisabled={isButtonDisabled}
+            buttonText="Save"
+          />
+
+          <QuizCreatorButton
             onClick={onCancelButtonClick}
             size="small"
             palette="secondary"
-          >
-            Cancel
-          </Button>
-          <Button
+            buttonText="Cancel"
+          />
+
+          <QuizCreatorButton
             onClick={onClearButtonClick}
             size="small"
             palette="danger"
             color="white"
-            disabled={isButtonDisabled}
-          >
-            Clear
-          </Button>
+            isButtonDisabled={isButtonDisabled}
+            buttonText="Clear"
+          />
         </Fragment>
       )}
     </Set>
