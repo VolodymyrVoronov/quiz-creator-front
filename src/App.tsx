@@ -80,7 +80,11 @@ const App: FC<{}> = (): JSX.Element => {
           <Route path={Paths.AuthPage} element={<AuthPage />} />
           <Route path={Paths.AuthFormPage} element={<AuthFormPage />} />
           <Route path={Paths.AllQuizzesPage} element={<AllQuizzesPage />} />
-          <Route path={Paths.QuizCreator} element={<QuizCreatorPage />} />
+
+          {isUserLogged ? (
+            <Route path={Paths.QuizCreator} element={<QuizCreatorPage />} />
+          ) : null}
+
           <Route path={Paths.NoPage} element={<p>Nothing found.</p>} />
         </Routes>
       </Suspense>
