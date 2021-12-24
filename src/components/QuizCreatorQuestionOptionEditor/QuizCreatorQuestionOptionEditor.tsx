@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Input, Text } from "bumbag";
+import { Checkbox, Divider, Flex, Input, Text } from "bumbag";
 import { FC, Fragment, memo, useCallback, useState } from "react";
 
 import { quizStore } from "store/quizStore";
@@ -27,7 +27,7 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
     userAnswer,
     amountOfAnswerOptions,
   }): JSX.Element => {
-    const { updateAnswerOption, quiz } = quizStore();
+    const { updateAnswerOption, deleteAnswerOption } = quizStore();
 
     const [editingMode, setEditingMode] = useState<boolean>(false);
     const [answerOptionText, setQuizTitle] = useState<string>("Quiz title");
@@ -61,6 +61,10 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
       []
     );
 
+    const onDeleteButtonClick = () => {
+      deleteAnswerOption(id, questionId);
+    };
+
     const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.checked;
 
@@ -89,13 +93,14 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
                 "min-fullHD": "16px",
               }}
               name="Quiz title"
-              width="25%"
+              width="100%"
               marginLeft="5px"
             />
           </Fragment>
         ) : (
           <Text
             marginRight="20px"
+            width="100%"
             fontSize={{
               "min-mobile": "18px",
               "min-desktop": "20px",
@@ -118,7 +123,7 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
 
         {amountOfAnswerOptions > 2 && (
           <QuizCreatorButton
-            onClick={() => {}}
+            onClick={onDeleteButtonClick}
             size="small"
             palette="danger"
             color="white"

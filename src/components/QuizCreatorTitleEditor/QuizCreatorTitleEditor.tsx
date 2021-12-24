@@ -7,7 +7,7 @@ import { quizStore } from "store/quizStore";
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 
 const QuizCreatorTitleEditor: FC<{}> = (): JSX.Element => {
-  const { updateQuiz, quiz } = quizStore();
+  const { updateQuizTitle, quiz } = quizStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
   const [quizTitle, setQuizTitle] = useState<string>("Quiz title");
@@ -20,8 +20,8 @@ const QuizCreatorTitleEditor: FC<{}> = (): JSX.Element => {
   const onSaveButtonClick = useCallback(() => {
     setEditingMode(() => false);
 
-    updateQuiz(quizTitle, quiz[0].id);
-  }, [quiz, quizTitle, updateQuiz]);
+    updateQuizTitle(quizTitle, quiz[0].id);
+  }, [quiz, quizTitle, updateQuizTitle]);
 
   const onCancelButtonClick = useCallback(() => {
     setEditingMode(() => false);

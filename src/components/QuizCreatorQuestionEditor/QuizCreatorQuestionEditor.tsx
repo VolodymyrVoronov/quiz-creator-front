@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
-import { Flex, Input, Text } from "bumbag";
+import { Box, Divider, Flex, Input, Set, Text } from "bumbag";
 import { motion } from "framer-motion";
 
 import { IOption, quizStore } from "store/quizStore";
@@ -7,19 +7,23 @@ import { IOption, quizStore } from "store/quizStore";
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 import QuizCreatorQuestionOptionEditor from "components/QuizCreatorQuestionOptionEditor/QuizCreatorQuestionOptionEditor";
 import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
+import { ImBin } from "react-icons/im";
 
 interface IQuizCreatorTitleEditorProps {
   questionId: string;
   question: string;
   options: IOption[];
+  amountOfQuestions: number;
 }
 
 const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   questionId,
   question,
   options,
+  amountOfQuestions,
 }): JSX.Element => {
-  const { updateQuestion, addNewAnswerOption } = quizStore();
+  const { updateQuestionTitle, addNewAnswerOption, deleleteQuestion } =
+    quizStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
   const [questionTitle, setQuizTitle] = useState<string>("Quiz title");
@@ -32,8 +36,8 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   const onSaveButtonClick = useCallback(() => {
     setEditingMode(() => false);
 
-    updateQuestion(questionTitle, questionId);
-  }, [questionId, questionTitle, updateQuestion]);
+    updateQuestionTitle(questionTitle, questionId);
+  }, [questionId, questionTitle, updateQuestionTitle]);
 
   const onCancelButtonClick = useCallback(() => {
     setEditingMode(() => false);
@@ -54,6 +58,10 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
 
   const onAddNewAnswerOptionButtonClick = (): void => {
     addNewAnswerOption(questionId);
+  };
+
+  const onDeleteThisQuestionButtonClick = (): void => {
+    deleleteQuestion(questionId);
   };
 
   const container = {
@@ -130,22 +138,36 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
                   userAnswer={userAnswer}
                   amountOfAnswerOptions={options.length}
                 />
+                <Divider marginY="10px" />
               </motion.article>
             );
           })}
         </motion.section>
       </Flex>
 
-      <Flex>
+      <Set orientation="vertical" spacing="minor-3" marginTop="10px">
         <QuizCreatorButton
           onClick={onAddNewAnswerOptionButtonClick}
-          mt="15px"
           size="small"
           palette="success"
           color="white"
           buttonText="Add new answer option"
         />
-      </Flex>
+
+        {amountOfQuestions >= 2 && (
+          <QuizCreatorButton
+            onClick={onDeleteThisQuestionButtonClick}
+            size="small"
+            palette="danger"
+            color="white"
+            buttonText="Delete this question"
+          >
+            <Box marginLeft="10px">
+              <ImBin />
+            </Box>
+          </QuizCreatorButton>
+        )}
+      </Set>
     </Flex>
   );
 };

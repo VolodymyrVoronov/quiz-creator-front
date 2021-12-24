@@ -1,5 +1,5 @@
 import { FC, useRef } from "react";
-import { Card, Divider, Flex, Heading, Set, Text } from "bumbag";
+import { Card, Container, Divider, Flex, Heading, Set, Text } from "bumbag";
 import { ImPlus } from "react-icons/im";
 import { motion } from "framer-motion";
 
@@ -62,89 +62,93 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
       animate={{ x: 0, opacity: 1 }}
       transition={{ ease: "easeOut", duration: 2 }}
     >
-      <Flex
-        flexDirection="column"
-        justifyContent="center"
-        paddingY={{
-          "min-mobile": "75px",
-          "min-desktop": "100px",
-          "min-fullHD": "100px",
-        }}
-        paddingX={{
-          "min-mobile": "10px",
-          "min-desktop": "25px",
-          "min-fullHD": "50px",
-        }}
-      >
-        <BackButton routeName={Paths.StartPage} />
-        <Card width="100%">
-          <Heading use="h3" textAlign="center">
-            Quiz Creator
-          </Heading>
-          {quiz.length === 0 && (
-            <Flex justifyContent="center" marginTop="25px">
-              <QuizCreatorButton
-                onClick={onCrateNewQuizButtonClick}
-                palette="primary"
-                color="white"
-              >
-                Create new quiz
-                <Text display="flex" fontSize="14px" marginLeft="10px">
-                  <ImPlus />
-                </Text>
-              </QuizCreatorButton>
-            </Flex>
-          )}
+      <Container display="flex" justifyContent="center">
+        <Flex
+          flexDirection="column"
+          justifyContent="center"
+          width="1200px"
+          paddingY={{
+            "min-mobile": "75px",
+            "min-desktop": "100px",
+            "min-fullHD": "100px",
+          }}
+          paddingX={{
+            "min-mobile": "10px",
+            // "min-desktop": "25px",
+            // "min-fullHD": "50px",
+          }}
+        >
+          <BackButton routeName={Paths.StartPage} />
+          <Card width="100%">
+            <Heading use="h3" textAlign="center">
+              Quiz Creator
+            </Heading>
+            {quiz.length === 0 && (
+              <Flex justifyContent="center" marginTop="25px">
+                <QuizCreatorButton
+                  onClick={onCrateNewQuizButtonClick}
+                  palette="primary"
+                  color="white"
+                >
+                  Create new quiz
+                  <Text display="flex" fontSize="14px" marginLeft="10px">
+                    <ImPlus />
+                  </Text>
+                </QuizCreatorButton>
+              </Flex>
+            )}
 
-          {quiz.length !== 0 && (
-            <Flex width="100%" marginTop="25px" flexDirection="column">
-              <QuizCreatorTitleEditor />
+            {quiz.length !== 0 && (
+              <Flex width="100%" marginTop="25px" flexDirection="column">
+                <QuizCreatorTitleEditor />
 
-              <Divider marginY="25px" />
+                <Divider marginY="25px" borderWidth="2px" />
 
-              <motion.section
-                variants={container}
-                initial="hidden"
-                animate={quiz[0].questions.length > 0 && "visible"}
-              >
-                {quiz[0].questions.map((questionItem) => {
-                  const { id, question, options } = questionItem;
+                <motion.section
+                  variants={container}
+                  initial="hidden"
+                  animate={quiz[0].questions.length > 0 && "visible"}
+                >
+                  {quiz[0].questions.map((questionItem) => {
+                    const { id, question, options } = questionItem;
 
-                  return (
-                    <motion.article key={id} variants={item}>
-                      <QuizCreatorQuestionEditor
-                        questionId={id}
-                        question={question}
-                        options={options}
-                      />
-                      <Divider marginY="25px" />
-                    </motion.article>
-                  );
-                })}
-              </motion.section>
-            </Flex>
-          )}
-        </Card>
-        {quiz.length !== 0 && (
-          <Card width="100%" marginTop="15px" ref={divRef}>
-            <Set spacing="minor-5">
-              <QuizCreatorButton
-                onClick={onAddNewQuestionButtonClick}
-                palette="secondary"
-                color="white"
-                buttonText="Added new question"
-              />
-
-              <QuizCreatorButton
-                onClick={onAddNewQuestionButtonClick}
-                palette="success"
-                color="white"
-                buttonText="Save quiz"
-              />
-            </Set>
+                    return (
+                      <motion.article key={id} variants={item}>
+                        <QuizCreatorQuestionEditor
+                          questionId={id}
+                          question={question}
+                          options={options}
+                          amountOfQuestions={quiz[0].questions.length}
+                        />
+                        <Divider marginY="25px" borderWidth="2px" />
+                      </motion.article>
+                    );
+                  })}
+                </motion.section>
+              </Flex>
+            )}
           </Card>
-        )}
-      </Flex>
+          {quiz.length !== 0 && (
+            <Card width="100%" marginTop="15px" ref={divRef}>
+              <Set spacing="minor-5">
+                <QuizCreatorButton
+                  onClick={onAddNewQuestionButtonClick}
+                  palette="secondary"
+                  color="white"
+                  buttonText="Added new question"
+                />
+
+                <QuizCreatorButton
+                  onClick={onAddNewQuestionButtonClick}
+                  palette="success"
+                  color="white"
+                  buttonText="Save quiz"
+                />
+              </Set>
+            </Card>
+          )}
+        </Flex>
+      </Container>
     </motion.div>
   );
 };

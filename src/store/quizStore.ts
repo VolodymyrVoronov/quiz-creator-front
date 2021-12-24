@@ -29,15 +29,17 @@ interface IQuizStore {
   quiz: IQuiz[];
   isLoading: boolean;
   createNewQuiz: () => void;
-  updateQuiz: (data: string, id: string) => void;
-  updateQuestion: (data: string, id: string) => void;
+  updateQuizTitle: (data: string, id: string) => void;
+  updateQuestionTitle: (data: string, id: string) => void;
   updateAnswerOption: (
     data: string | boolean,
     answerOptionId: string,
     questionId: string
   ) => void;
+  deleteAnswerOption: (answerOptionId: string, questionId: string) => void;
   addNewAnswerOption: (questionId: string) => void;
   addNewQuestion: (quizId: string) => void;
+  deleleteQuestion: (questionId: string) => void;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
@@ -55,7 +57,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
     });
   },
 
-  updateQuiz: (data: string, id: string) => {
+  updateQuizTitle: (data: string, id: string) => {
     set((state) => {
       const updatedQuiz = state.quiz.map((quiz) => {
         if (quiz.id === id) {
@@ -75,10 +77,9 @@ export const quizStore = create<IQuizStore>((set, get) => ({
     });
   },
 
-  updateQuestion: (data: string, id: string) => {
-    console.log(data, id);
+  updateQuestionTitle: (data: string, id: string) => {
     set((state) => {
-      const updateQuiz = state.quiz.map((quiz) => {
+      const updateQuizTitle = state.quiz.map((quiz) => {
         const updatedQuestions = quiz.questions.map((question) => {
           if (question.id === id) {
             return {
@@ -98,7 +99,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
 
       return {
         ...state,
-        quiz: updateQuiz,
+        quiz: updateQuizTitle,
       };
     });
   },
@@ -183,6 +184,37 @@ export const quizStore = create<IQuizStore>((set, get) => ({
     });
   },
 
+  deleteAnswerOption: (answerOptionId: string, questionId: string) => {
+    set((state) => {
+      const updatedQuiz = state.quiz.map((quiz) => {
+        const updatedQuestions = quiz.questions.map((question) => {
+          if (question.id === questionId) {
+            const updatedOptions = question.options.filter(
+              (option) => option.id !== answerOptionId
+            );
+
+            return {
+              ...question,
+              options: updatedOptions,
+            };
+          }
+
+          return question;
+        });
+
+        return {
+          ...quiz,
+          questions: updatedQuestions,
+        };
+      });
+
+      return {
+        ...state,
+        quiz: updatedQuiz,
+      };
+    });
+  },
+
   addNewQuestion: (quizId: string) => {
     set((state) => {
       const updatedQuiz = state.quiz.map((quiz) => {
@@ -198,6 +230,27 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         return quiz;
       });
 
+      return {
+        ...state,
+        quiz: updatedQuiz,
+      };
+    });
+  },
+
+  deleleteQuestion: (questionId: string) => {
+    console.log(questionId, questionId);
+
+    set((state) => {
+      const updatedQuiz = state.quiz.map((quiz) => {
+        const updatedQuestions = quiz.questions.filter(
+          (question) => question.id !== questionId
+        );
+
+        return {
+          ...quiz,
+          questions: updatedQuestions,
+        };
+      });
       return {
         ...state,
         quiz: updatedQuiz,

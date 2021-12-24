@@ -29,7 +29,13 @@ const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
   mb,
 }): JSX.Element => {
   return (
-    <Set marginTop={mt} marginRight={mr} marginLeft={ml} marginBottom={mb}>
+    <Set
+      marginTop={mt}
+      marginRight={mr}
+      marginLeft={ml}
+      marginBottom={mb}
+      flexWrap="nowrap"
+    >
       <QuizCreatorButton
         isButtonDisabled={editingMode}
         onClick={onEditButtonClick}
