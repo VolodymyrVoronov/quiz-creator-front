@@ -36,12 +36,14 @@ const QuizCreatorButtons: FC<IQuizCreatorButtonsProps> = ({
       marginBottom={mb}
       flexWrap="nowrap"
     >
-      <QuizCreatorButton
-        isButtonDisabled={editingMode}
-        onClick={onEditButtonClick}
-        size="small"
-        buttonText="Edit"
-      />
+      {!editingMode && (
+        <QuizCreatorButton
+          isButtonDisabled={editingMode}
+          onClick={onEditButtonClick}
+          size="small"
+          buttonText="Edit"
+        />
+      )}
 
       {editingMode && (
         <Fragment>

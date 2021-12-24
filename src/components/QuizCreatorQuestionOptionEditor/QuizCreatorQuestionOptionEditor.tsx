@@ -128,6 +128,10 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
 
         <Flex
           alignItems="flex-start"
+          alignSelf={{
+            "min-mobile": "baseline",
+            "min-desktop": "auto",
+          }}
           marginTop={{
             "min-mobile": "15px",
             "min-desktop": "0px",
