@@ -15,7 +15,7 @@ import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 // import styles from "./QuizCreatorPage.module.css";
 
 const QuizCreatorPage: FC<{}> = (): JSX.Element => {
-  const { createNewQuiz, addNewQuestion, quiz } = quizStore();
+  const { createNewQuiz, addNewQuestion, saveQuiz, quiz } = quizStore();
 
   const divRef = useRef<null | HTMLElement>(null);
 
@@ -35,7 +35,9 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
     }
   };
 
-  console.log(quiz);
+  const onSaveQuizButtonClick = () => {
+    saveQuiz();
+  };
 
   const container = {
     hidden: { opacity: 1, scale: 0 },
@@ -136,13 +138,15 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                   palette="secondary"
                   color="white"
                   buttonText="Added new question"
+                  size="small"
                 />
 
                 <QuizCreatorButton
-                  onClick={onAddNewQuestionButtonClick}
+                  onClick={onSaveQuizButtonClick}
                   palette="success"
                   color="white"
                   buttonText="Save quiz"
+                  size="small"
                 />
               </Set>
             </Card>

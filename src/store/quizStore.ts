@@ -29,7 +29,9 @@ interface IQuiz {
 interface IQuizStore {
   quiz: IQuiz[];
   isLoading: boolean;
+
   createNewQuiz: () => void;
+
   updateQuizTitle: (data: string, id: string) => void;
   updateQuestionTitle: (data: string, id: string) => void;
   updateAnswerOption: (
@@ -37,10 +39,14 @@ interface IQuizStore {
     answerOptionId: string,
     questionId: string
   ) => void;
+
   deleteAnswerOption: (answerOptionId: string, questionId: string) => void;
+  deleteQuestion: (questionId: string) => void;
+
   addNewAnswerOption: (questionId: string) => void;
   addNewQuestion: (quizId: string) => void;
-  deleleteQuestion: (questionId: string) => void;
+
+  saveQuiz: () => void;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
@@ -51,6 +57,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
     set(
       produce((state) => {
         const newQuiz = createNewQuiz();
+
         state.quiz.push(newQuiz);
       })
     );
@@ -62,6 +69,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         const updatedQuiz = state.quiz.find(
           (quiz: { id: string }) => quiz.id === id
         );
+
         updatedQuiz.quizTitle = data;
       })
     );
@@ -137,12 +145,13 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         const updatedQuiz = state.quiz.find(
           (quiz: { id: string }) => quiz.id === quizId
         );
+
         updatedQuiz.questions.push(createNewQuestion());
       })
     );
   },
 
-  deleleteQuestion: (questionId: string) => {
+  deleteQuestion: (questionId: string) => {
     set(
       produce((state) => {
         state.quiz[0].questions = state.quiz[0].questions.filter(
@@ -150,5 +159,9 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         );
       })
     );
+  },
+
+  saveQuiz: () => {
+    console.log(get().quiz);
   },
 }));

@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Input, Text } from "bumbag";
+import { Checkbox, Flex, Input, Text, Tooltip } from "bumbag";
 import { FC, Fragment, memo, useCallback, useState } from "react";
 import { ImBin } from "react-icons/im";
 
@@ -73,65 +73,88 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
     };
 
     return (
-      <Flex flexDirection="row" marginTop="10px" alignItems="center">
-        <Checkbox
-          onChange={onCheckboxChange}
-          marginRight="15px"
-          fontSize="28px"
-          checked={checked}
-        />
-        {editingMode ? (
-          <Fragment>
-            {index + 1}.
-            <Input
-              onChange={onInputChange}
-              value={answerOptionText}
-              marginRight="20px"
+      <Flex
+        flexDirection={{
+          "min-mobile": "column",
+          "min-desktop": "row",
+        }}
+        marginTop="10px"
+        alignItems="center"
+      >
+        <Flex alignItems="center" width="100%">
+          <Tooltip content={checked ? "Correct" : "Incorrect"} hasArrow>
+            <Checkbox
+              onChange={onCheckboxChange}
+              marginRight="15px"
               fontSize={{
-                "min-mobile": "16px",
-                "min-desktop": "16px",
-                "min-fullHD": "16px",
+                "min-mobile": "18px",
+                "min-desktop": "22px",
+                "min-fullHD": "26px",
               }}
-              name="Quiz title"
-              width="100%"
-              marginLeft="5px"
+              checked={checked}
             />
-          </Fragment>
-        ) : (
-          <Text
-            marginRight="20px"
-            width="100%"
-            fontSize={{
-              "min-mobile": "18px",
-              "min-desktop": "20px",
-              "min-fullHD": "22px",
-            }}
-          >
-            {index + 1}. {answerOption}
-          </Text>
-        )}
+          </Tooltip>
+          {editingMode ? (
+            <Fragment>
+              {index + 1}.
+              <Input
+                onChange={onInputChange}
+                value={answerOptionText}
+                marginRight="20px"
+                fontSize={{
+                  "min-mobile": "16px",
+                  "min-desktop": "16px",
+                  "min-fullHD": "16px",
+                }}
+                name="Quiz title"
+                width="100%"
+                marginLeft="5px"
+              />
+            </Fragment>
+          ) : (
+            <Text
+              marginRight="20px"
+              width="100%"
+              fontSize={{
+                "min-mobile": "18px",
+                "min-desktop": "20px",
+                "min-fullHD": "22px",
+              }}
+            >
+              {index + 1}. {answerOption}
+            </Text>
+          )}
+        </Flex>
 
-        <QuizCreatorButtons
-          editingMode={editingMode}
-          onEditButtonClick={onEditButtonClick}
-          onSaveButtonClick={onSaveButtonClick}
-          onCancelButtonClick={onCancelButtonClick}
-          onClearButtonClick={onClearButtonClick}
-          isButtonDisabled={answerOptionText.length === 0}
-          mt={0}
-        />
+        <Flex
+          alignItems="flex-start"
+          marginTop={{
+            "min-mobile": "15px",
+            "min-desktop": "0px",
+          }}
+        >
+          <QuizCreatorButtons
+            editingMode={editingMode}
+            onEditButtonClick={onEditButtonClick}
+            onSaveButtonClick={onSaveButtonClick}
+            onCancelButtonClick={onCancelButtonClick}
+            onClearButtonClick={onClearButtonClick}
+            isButtonDisabled={answerOptionText.length === 0}
+            mt={0}
+          />
 
-        {amountOfAnswerOptions > 2 && (
-          <QuizCreatorButton
-            onClick={onDeleteButtonClick}
-            size="small"
-            palette="danger"
-            color="white"
-            ml="10px"
-          >
-            <ImBin />
-          </QuizCreatorButton>
-        )}
+          {amountOfAnswerOptions > 2 && (
+            <QuizCreatorButton
+              onClick={onDeleteButtonClick}
+              size="small"
+              palette="danger"
+              color="white"
+              ml="10px"
+            >
+              <ImBin />
+            </QuizCreatorButton>
+          )}
+        </Flex>
       </Flex>
     );
   };

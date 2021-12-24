@@ -22,7 +22,7 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   options,
   amountOfQuestions,
 }): JSX.Element => {
-  const { updateQuestionTitle, addNewAnswerOption, deleleteQuestion } =
+  const { updateQuestionTitle, addNewAnswerOption, deleteQuestion } =
     quizStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
@@ -61,7 +61,7 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   };
 
   const onDeleteThisQuestionButtonClick = (): void => {
-    deleleteQuestion(questionId);
+    deleteQuestion(questionId);
   };
 
   const container = {

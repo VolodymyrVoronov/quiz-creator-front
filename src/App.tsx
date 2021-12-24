@@ -64,7 +64,6 @@ const App: FC<{}> = (): JSX.Element => {
 
   const isUserLogged = !checkIfObjectEmpty(userData);
 
-  console.log(userData);
   return (
     <Fragment>
       <ToastManager />
