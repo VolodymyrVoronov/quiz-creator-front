@@ -152,6 +152,10 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
           palette="success"
           color="white"
           buttonText="Add new answer option"
+          w={{
+            "min-mobile": "100%",
+            "min-desktop": "auto",
+          }}
         />
 
         {amountOfQuestions >= 2 && (
@@ -161,6 +165,10 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
             palette="danger"
             color="white"
             buttonText="Delete this question"
+            w={{
+              "min-mobile": "100%",
+              "min-desktop": "auto",
+            }}
           >
             <Box marginLeft="10px">
               <ImBin />

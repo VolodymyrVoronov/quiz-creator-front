@@ -104,8 +104,6 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
   };
 
   const onAuthButtonClick = () => {
-    // console.log(formData);
-
     if (isSignInForm) {
       signIn(formData, navigation);
     } else {
@@ -154,6 +152,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
         }}
       >
         <BackButton routeName={Paths.AuthPage} onClick={onBackButtonClick} />
+
         <Card width="600px" variant="shadowed">
           <motion.span
             initial={{ opacity: 0 }}
@@ -368,6 +367,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
               </Set>
             </Stack>
           </Flex>
+
           {errorMessage ? (
             <motion.div
               initial={{ opacity: 0 }}

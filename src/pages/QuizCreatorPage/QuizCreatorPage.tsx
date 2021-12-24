@@ -76,8 +76,6 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
           }}
           paddingX={{
             "min-mobile": "10px",
-            // "min-desktop": "25px",
-            // "min-fullHD": "50px",
           }}
         >
           <BackButton routeName={Paths.StartPage} />
@@ -139,6 +137,10 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                   color="white"
                   buttonText="Added new question"
                   size="small"
+                  w={{
+                    "min-mobile": "100%",
+                    "min-desktop": "auto",
+                  }}
                 />
 
                 <QuizCreatorButton
@@ -147,6 +149,10 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                   color="white"
                   buttonText="Save quiz"
                   size="small"
+                  w={{
+                    "min-mobile": "100%",
+                    "min-desktop": "auto",
+                  }}
                 />
               </Set>
             </Card>

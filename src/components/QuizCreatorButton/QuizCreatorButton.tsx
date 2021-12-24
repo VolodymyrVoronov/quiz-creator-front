@@ -21,6 +21,7 @@ interface IQuizCreatorButtonProps {
   mr?: any;
   ml?: any;
   mb?: any;
+  w?: any;
 }
 
 const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
@@ -35,6 +36,7 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
   mr,
   ml,
   mb,
+  w,
 }): JSX.Element => {
   return (
     <Button
@@ -48,6 +50,7 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
       marginRight={mr}
       marginLeft={ml}
       marginBottom={mb}
+      width={w}
     >
       {buttonText}
       {children}

@@ -34,9 +34,10 @@ interface IAuthStore {
   setTypeOfAuthForm: (flag: boolean) => void;
   setErrorMassageToDefault: () => void;
   setUserData: (userData: IUserData) => void;
-  logOut: () => void;
+
   signUp: (data: ISignUp, navigation: NavigateFunction) => Promise<void>;
   signIn: (data: ISignIn, navigation: NavigateFunction) => Promise<void>;
+  logOut: () => void;
 }
 
 export const authStore = create<IAuthStore>((set, get) => ({
@@ -64,7 +65,6 @@ export const authStore = create<IAuthStore>((set, get) => ({
       set({ isAuthorizing: true });
 
       const response = await signup(data);
-      console.log(response);
 
       if (response.status === 200) {
         set({ userData: response.data.result });
