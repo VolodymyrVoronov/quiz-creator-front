@@ -1,11 +1,11 @@
-import { Checkbox, Divider, Flex, Input, Text } from "bumbag";
+import { Checkbox, Flex, Input, Text } from "bumbag";
 import { FC, Fragment, memo, useCallback, useState } from "react";
+import { ImBin } from "react-icons/im";
 
 import { quizStore } from "store/quizStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
-import { ImBin } from "react-icons/im";
 
 interface IQuizCreatorQuestionOptionEditorProps {
   index: number;

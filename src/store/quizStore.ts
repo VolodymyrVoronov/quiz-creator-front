@@ -238,8 +238,6 @@ export const quizStore = create<IQuizStore>((set, get) => ({
   },
 
   deleleteQuestion: (questionId: string) => {
-    console.log(questionId, questionId);
-
     set((state) => {
       const updatedQuiz = state.quiz.map((quiz) => {
         const updatedQuestions = quiz.questions.filter(
@@ -251,6 +249,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
           questions: updatedQuestions,
         };
       });
+
       return {
         ...state,
         quiz: updatedQuiz,

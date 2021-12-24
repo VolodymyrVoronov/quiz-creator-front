@@ -1,13 +1,13 @@
 import React, { FC, useCallback, useState } from "react";
 import { Box, Divider, Flex, Input, Set, Text } from "bumbag";
 import { motion } from "framer-motion";
+import { ImBin } from "react-icons/im";
 
 import { IOption, quizStore } from "store/quizStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 import QuizCreatorQuestionOptionEditor from "components/QuizCreatorQuestionOptionEditor/QuizCreatorQuestionOptionEditor";
 import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
-import { ImBin } from "react-icons/im";
 
 interface IQuizCreatorTitleEditorProps {
   questionId: string;
