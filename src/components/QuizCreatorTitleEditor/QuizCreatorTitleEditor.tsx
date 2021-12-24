@@ -2,12 +2,12 @@ import React, { FC, useCallback, useState } from "react";
 import { Flex, Input, Text } from "bumbag";
 import { motion } from "framer-motion";
 
-import { quizStore } from "store/quizStore";
+import { quizCreatorStore } from "store/quizCreatorStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 
 const QuizCreatorTitleEditor: FC<{}> = (): JSX.Element => {
-  const { updateQuizTitle, quiz } = quizStore();
+  const { updateQuizTitle, quiz } = quizCreatorStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
   const [quizTitle, setQuizTitle] = useState<string>("Quiz title");
@@ -54,9 +54,9 @@ const QuizCreatorTitleEditor: FC<{}> = (): JSX.Element => {
             value={quizTitle}
             marginRight="20px"
             fontSize={{
-              "min-mobile": "18px",
-              "min-desktop": "20px",
-              "min-fullHD": "24px",
+              "min-mobile": "16px",
+              "min-desktop": "18px",
+              "min-fullHD": "20px",
             }}
             name="Quiz title"
           />

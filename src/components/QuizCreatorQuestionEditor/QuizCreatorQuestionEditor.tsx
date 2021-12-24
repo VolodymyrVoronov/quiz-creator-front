@@ -3,7 +3,7 @@ import { Box, Divider, Flex, Input, Set, Text } from "bumbag";
 import { motion } from "framer-motion";
 import { ImBin } from "react-icons/im";
 
-import { IOption, quizStore } from "store/quizStore";
+import { IAnswerOption, quizCreatorStore } from "store/quizCreatorStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 import QuizCreatorQuestionOptionEditor from "components/QuizCreatorQuestionOptionEditor/QuizCreatorQuestionOptionEditor";
@@ -12,7 +12,7 @@ import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 interface IQuizCreatorTitleEditorProps {
   questionId: string;
   question: string;
-  options: IOption[];
+  options: IAnswerOption[];
   amountOfQuestions: number;
 }
 
@@ -23,14 +23,14 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   amountOfQuestions,
 }): JSX.Element => {
   const { updateQuestionTitle, addNewAnswerOption, deleteQuestion } =
-    quizStore();
+    quizCreatorStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
-  const [questionTitle, setQuizTitle] = useState<string>("Quiz title");
+  const [questionTitle, setQuestionTitle] = useState<string>("Question title");
 
   const onEditButtonClick = useCallback(() => {
     setEditingMode(() => true);
-    setQuizTitle(() => question);
+    setQuestionTitle(() => question);
   }, [question]);
 
   const onSaveButtonClick = useCallback(() => {
@@ -44,14 +44,14 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   }, []);
 
   const onClearButtonClick = useCallback(() => {
-    setQuizTitle(() => "");
+    setQuestionTitle(() => "");
   }, []);
 
   const onInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const title = e.target.value;
 
-      setQuizTitle(title);
+      setQuestionTitle(title);
     },
     []
   );
@@ -89,11 +89,11 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
           value={questionTitle}
           marginRight="20px"
           fontSize={{
-            "min-mobile": "18px",
-            "min-desktop": "20px",
-            "min-fullHD": "24px",
+            "min-mobile": "16px",
+            "min-desktop": "18px",
+            "min-fullHD": "20px",
           }}
-          name="Quiz title"
+          name="Question title"
         />
       ) : (
         <Text

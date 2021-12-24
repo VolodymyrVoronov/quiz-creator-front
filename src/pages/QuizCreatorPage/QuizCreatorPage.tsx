@@ -3,7 +3,7 @@ import { Card, Container, Divider, Flex, Heading, Set, Text } from "bumbag";
 import { ImPlus } from "react-icons/im";
 import { motion } from "framer-motion";
 
-import { quizStore } from "store/quizStore";
+import { quizCreatorStore } from "store/quizCreatorStore";
 
 import Paths from "const/path";
 
@@ -15,7 +15,7 @@ import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 // import styles from "./QuizCreatorPage.module.css";
 
 const QuizCreatorPage: FC<{}> = (): JSX.Element => {
-  const { createNewQuiz, addNewQuestion, saveQuiz, quiz } = quizStore();
+  const { createNewQuiz, addNewQuestion, saveQuiz, quiz } = quizCreatorStore();
 
   const divRef = useRef<null | HTMLElement>(null);
 

@@ -12,7 +12,7 @@ const createNewAnswerOption = () => {
 const createNewQuestion = () => {
   return {
     id: uniqid(),
-    question: "Question",
+    question: "Question title",
     options: [createNewAnswerOption(), createNewAnswerOption()],
   };
 };

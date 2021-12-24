@@ -2,7 +2,7 @@ import { Checkbox, Flex, Input, Text, Tooltip } from "bumbag";
 import { FC, Fragment, memo, useCallback, useState } from "react";
 import { ImBin } from "react-icons/im";
 
-import { quizStore } from "store/quizStore";
+import { quizCreatorStore } from "store/quizCreatorStore";
 
 import QuizCreatorButtons from "components/QuizCreatorButtons/QuizCreatorButtons";
 import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
@@ -27,7 +27,7 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
     userAnswer,
     amountOfAnswerOptions,
   }): JSX.Element => {
-    const { updateAnswerOption, deleteAnswerOption } = quizStore();
+    const { updateAnswerOption, deleteAnswerOption } = quizCreatorStore();
 
     const [editingMode, setEditingMode] = useState<boolean>(false);
     const [answerOptionText, setQuizTitle] = useState<string>("Quiz title");

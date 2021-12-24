@@ -81,7 +81,12 @@ export const authStore = create<IAuthStore>((set, get) => ({
     } catch (e) {
       if (axios.isAxiosError(e)) {
         console.log(e?.response?.data.message);
+
         set({ errorMessage: e?.response?.data.message });
+
+        if (e?.response?.data.message === undefined) {
+          set({ errorMessage: "Something went wrong. Try again a bit later." });
+        }
 
         set({ isAuthorizing: false });
       }
@@ -95,7 +100,6 @@ export const authStore = create<IAuthStore>((set, get) => ({
       set({ isAuthorizing: true });
 
       const response = await signin(data);
-      console.log(response);
 
       if (response.status === 200) {
         set({ userData: response.data.result });
@@ -112,7 +116,12 @@ export const authStore = create<IAuthStore>((set, get) => ({
     } catch (e) {
       if (axios.isAxiosError(e)) {
         console.log(e?.response?.data.message);
+
         set({ errorMessage: e?.response?.data.message });
+
+        if (e?.response?.data.message === undefined) {
+          set({ errorMessage: "Something went wrong. Try again a bit later." });
+        }
 
         set({ isAuthorizing: false });
       }

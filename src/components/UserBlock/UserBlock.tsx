@@ -5,6 +5,7 @@ import { Avatar, Button, Flex, Set, Text } from "bumbag";
 import { ImExit } from "react-icons/im";
 
 import { authStore } from "store/authStore";
+import { quizCreatorStore } from "store/quizCreatorStore";
 
 import Paths from "const/path";
 
@@ -13,6 +14,8 @@ import styles from "./UserBlock.module.css";
 const UserBlock: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
 
+  const { clearQuiz } = quizCreatorStore();
+
   const {
     userData: { avatar, email },
     logOut,
@@ -20,6 +23,7 @@ const UserBlock: FC<{}> = (): JSX.Element => {
 
   const onLogOutButtonClick = () => {
     logOut();
+    clearQuiz();
 
     navigation(Paths.StartPage, { replace: true });
   };

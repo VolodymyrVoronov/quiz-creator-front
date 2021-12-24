@@ -5,9 +5,9 @@ import {
   createNewAnswerOption,
   createNewQuestion,
   createNewQuiz,
-} from "helpers/quizStore";
+} from "helpers/quizCreatorStore";
 
-export interface IOption {
+export interface IAnswerOption {
   id: string;
   answerOption: string;
   correct: boolean;
@@ -17,7 +17,7 @@ export interface IOption {
 interface IQuestion {
   id: string;
   question: string;
-  options: IOption[];
+  options: IAnswerOption[];
 }
 
 interface IQuiz {
@@ -26,11 +26,13 @@ interface IQuiz {
   questions: IQuestion[];
 }
 
-interface IQuizStore {
-  quiz: IQuiz[];
+interface IQuizCreatorStore {
+  quiz: IQuiz[] | [];
   isLoading: boolean;
 
   createNewQuiz: () => void;
+  saveQuiz: () => void;
+  clearQuiz: () => void;
 
   updateQuizTitle: (data: string, id: string) => void;
   updateQuestionTitle: (data: string, id: string) => void;
@@ -45,11 +47,9 @@ interface IQuizStore {
 
   addNewAnswerOption: (questionId: string) => void;
   addNewQuestion: (quizId: string) => void;
-
-  saveQuiz: () => void;
 }
 
-export const quizStore = create<IQuizStore>((set, get) => ({
+export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
   quiz: [],
   isLoading: false,
 
@@ -61,6 +61,17 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         state.quiz.push(newQuiz);
       })
     );
+  },
+
+  saveQuiz: () => {
+    const userId = JSON.parse(localStorage.getItem("userData") || "{}").id;
+    const createdQuiz = get().quiz[0];
+
+    console.log({ ...createdQuiz, userId });
+  },
+
+  clearQuiz: () => {
+    set({ quiz: [] });
   },
 
   updateQuizTitle: (data: string, id: string) => {
@@ -159,9 +170,5 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         );
       })
     );
-  },
-
-  saveQuiz: () => {
-    console.log(get().quiz);
   },
 }));
