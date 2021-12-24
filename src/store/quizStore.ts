@@ -1,4 +1,5 @@
 import create from "zustand";
+import produce from "immer";
 
 import {
   createNewAnswerOption,
@@ -47,61 +48,35 @@ export const quizStore = create<IQuizStore>((set, get) => ({
   isLoading: false,
 
   createNewQuiz: () => {
-    set((state) => {
-      const newQuiz = createNewQuiz();
-
-      return {
-        ...state,
-        quiz: [...state.quiz, newQuiz],
-      };
-    });
+    set(
+      produce((state) => {
+        const newQuiz = createNewQuiz();
+        state.quiz.push(newQuiz);
+      })
+    );
   },
 
   updateQuizTitle: (data: string, id: string) => {
-    set((state) => {
-      const updatedQuiz = state.quiz.map((quiz) => {
-        if (quiz.id === id) {
-          return {
-            ...quiz,
-            quizTitle: data,
-          };
-        }
-
-        return quiz;
-      });
-
-      return {
-        ...state,
-        quiz: updatedQuiz,
-      };
-    });
+    set(
+      produce((state) => {
+        const updatedQuiz = state.quiz.find(
+          (quiz: { id: string }) => quiz.id === id
+        );
+        updatedQuiz.quizTitle = data;
+      })
+    );
   },
 
   updateQuestionTitle: (data: string, id: string) => {
-    set((state) => {
-      const updateQuizTitle = state.quiz.map((quiz) => {
-        const updatedQuestions = quiz.questions.map((question) => {
-          if (question.id === id) {
-            return {
-              ...question,
-              question: data,
-            };
-          }
+    set(
+      produce((state) => {
+        const updatedQuestion = state.quiz[0].questions.find(
+          (question: { id: string }) => question.id === id
+        );
 
-          return question;
-        });
-
-        return {
-          ...quiz,
-          questions: updatedQuestions,
-        };
-      });
-
-      return {
-        ...state,
-        quiz: updateQuizTitle,
-      };
-    });
+        updatedQuestion.question = data;
+      })
+    );
   },
 
   updateAnswerOption: (
@@ -109,151 +84,71 @@ export const quizStore = create<IQuizStore>((set, get) => ({
     answerOptionId: string,
     questionId: string
   ) => {
-    set((state) => {
-      const updatedQuiz = state.quiz.map((quiz) => {
-        const updatedQuestions: IQuestion[] = quiz.questions.map((question) => {
-          if (question.id === questionId) {
-            const updatedOptions = question.options.map((option) => {
-              if (option.id === answerOptionId) {
-                if (typeof data === "string") {
-                  return {
-                    ...option,
-                    answerOption: data,
-                  };
-                }
+    set(
+      produce((state) => {
+        const updatedAnswerOption = state.quiz[0].questions.find(
+          (question: { id: string }) => question.id === questionId
+        );
 
-                if (typeof data === "boolean") {
-                  return {
-                    ...option,
-                    correct: data,
-                  };
-                }
-              }
+        if (typeof data === "string") {
+          updatedAnswerOption.options.find(
+            (option: { id: string }) => option.id === answerOptionId
+          ).answerOption = data;
+        }
 
-              return option;
-            });
-
-            return {
-              ...question,
-              options: updatedOptions,
-            };
-          }
-
-          return question;
-        });
-
-        return {
-          ...quiz,
-          questions: updatedQuestions,
-        };
-      });
-
-      return {
-        ...state,
-        quiz: updatedQuiz,
-      };
-    });
+        if (typeof data === "boolean") {
+          updatedAnswerOption.options.find(
+            (option: { id: string }) => option.id === answerOptionId
+          ).correct = data;
+        }
+      })
+    );
   },
 
   addNewAnswerOption: (questionId: string) => {
-    set((state) => {
-      const updatedQuiz = state.quiz.map((quiz) => {
-        const updatedQuestions = quiz.questions.map((question) => {
-          if (question.id === questionId) {
-            const newOption: IOption = createNewAnswerOption();
+    set(
+      produce((state) => {
+        const newAnswerOption = state.quiz[0].questions.find(
+          (question: { id: string }) => question.id === questionId
+        );
 
-            return {
-              ...question,
-              options: [...question.options, newOption],
-            };
-          }
-
-          return question;
-        });
-
-        return {
-          ...quiz,
-          questions: updatedQuestions,
-        };
-      });
-
-      return {
-        ...state,
-        quiz: updatedQuiz,
-      };
-    });
+        newAnswerOption.options.push(createNewAnswerOption());
+      })
+    );
   },
 
   deleteAnswerOption: (answerOptionId: string, questionId: string) => {
-    set((state) => {
-      const updatedQuiz = state.quiz.map((quiz) => {
-        const updatedQuestions = quiz.questions.map((question) => {
-          if (question.id === questionId) {
-            const updatedOptions = question.options.filter(
-              (option) => option.id !== answerOptionId
-            );
+    set(
+      produce((state) => {
+        const deletedAnswerOption = state.quiz[0].questions.find(
+          (question: { id: string }) => question.id === questionId
+        );
 
-            return {
-              ...question,
-              options: updatedOptions,
-            };
-          }
-
-          return question;
-        });
-
-        return {
-          ...quiz,
-          questions: updatedQuestions,
-        };
-      });
-
-      return {
-        ...state,
-        quiz: updatedQuiz,
-      };
-    });
+        deletedAnswerOption.options = deletedAnswerOption.options.filter(
+          (option: { id: string }) => option.id !== answerOptionId
+        );
+      })
+    );
   },
 
   addNewQuestion: (quizId: string) => {
-    set((state) => {
-      const updatedQuiz = state.quiz.map((quiz) => {
-        if (quiz.id === quizId) {
-          const newQuestion: IQuestion = createNewQuestion();
-
-          return {
-            ...quiz,
-            questions: [...quiz.questions, newQuestion],
-          };
-        }
-
-        return quiz;
-      });
-
-      return {
-        ...state,
-        quiz: updatedQuiz,
-      };
-    });
+    set(
+      produce((state) => {
+        const updatedQuiz = state.quiz.find(
+          (quiz: { id: string }) => quiz.id === quizId
+        );
+        updatedQuiz.questions.push(createNewQuestion());
+      })
+    );
   },
 
   deleleteQuestion: (questionId: string) => {
-    set((state) => {
-      const updatedQuiz = state.quiz.map((quiz) => {
-        const updatedQuestions = quiz.questions.filter(
-          (question) => question.id !== questionId
+    set(
+      produce((state) => {
+        state.quiz[0].questions = state.quiz[0].questions.filter(
+          (question: { id: string }) => question.id !== questionId
         );
-
-        return {
-          ...quiz,
-          questions: updatedQuestions,
-        };
-      });
-
-      return {
-        ...state,
-        quiz: updatedQuiz,
-      };
-    });
+      })
+    );
   },
 }));
