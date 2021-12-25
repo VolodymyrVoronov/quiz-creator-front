@@ -18,7 +18,7 @@ interface ISignIn {
   password: string;
 }
 
-interface IUserData {
+export interface IUserData {
   avatar?: string;
   email?: string;
   token?: string;

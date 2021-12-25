@@ -90,7 +90,7 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
         const redirectTimeout = setTimeout(() => {
           navigation(Paths.QuizzesPage);
           get().clearQuiz();
-
+          set({ successMessage: "", errorMessage: "" });
           clearTimeout(redirectTimeout);
         }, 2500);
       }
@@ -165,18 +165,6 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
     );
   },
 
-  addNewAnswerOption: (questionId: string) => {
-    set(
-      produce((state) => {
-        const newAnswerOption = state.quiz[0].questions.find(
-          (question: { id: string }) => question.id === questionId
-        );
-
-        newAnswerOption.options.push(createNewAnswerOption());
-      })
-    );
-  },
-
   deleteAnswerOption: (answerOptionId: string, questionId: string) => {
     set(
       produce((state) => {
@@ -191,6 +179,28 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
     );
   },
 
+  deleteQuestion: (questionId: string) => {
+    set(
+      produce((state) => {
+        state.quiz[0].questions = state.quiz[0].questions.filter(
+          (question: { id: string }) => question.id !== questionId
+        );
+      })
+    );
+  },
+
+  addNewAnswerOption: (questionId: string) => {
+    set(
+      produce((state) => {
+        const newAnswerOption = state.quiz[0].questions.find(
+          (question: { id: string }) => question.id === questionId
+        );
+
+        newAnswerOption.options.push(createNewAnswerOption());
+      })
+    );
+  },
+
   addNewQuestion: (quizId: string) => {
     set(
       produce((state) => {
@@ -199,16 +209,6 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
         );
 
         updatedQuiz.questions.push(createNewQuestion());
-      })
-    );
-  },
-
-  deleteQuestion: (questionId: string) => {
-    set(
-      produce((state) => {
-        state.quiz[0].questions = state.quiz[0].questions.filter(
-          (question: { id: string }) => question.id !== questionId
-        );
       })
     );
   },

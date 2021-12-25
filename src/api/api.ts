@@ -44,4 +44,8 @@ const saveNewQuiz = (data: ISaveNewQuiz) => {
   return instanceAPI.post("/quiz", data);
 };
 
-export { signup, signin, saveNewQuiz };
+const fetchAllQuizzes = () => {
+  return instanceAPI.get("/quiz");
+};
+
+export { signup, signin, saveNewQuiz, fetchAllQuizzes };

@@ -22,8 +22,6 @@ import QuizCreatorQuestionEditor from "components/QuizCreatorQuestionEditor/Quiz
 import BackButton from "components/common/BackButton/BackButton";
 import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 
-// import styles from "./QuizCreatorPage.module.css";
-
 const QuizCreatorPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
   const {
