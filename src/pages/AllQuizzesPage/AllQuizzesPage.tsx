@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Container, Flex } from "bumbag";
 
@@ -20,48 +20,50 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
   }, [fetchAllQuizzes]);
 
   return (
-    <motion.div
-      initial={{ x: -500, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ ease: "easeOut", duration: 2 }}
-    >
-      <BackButton routeName={Paths.StartPage} />
-      <Container display="flex" justifyContent="center">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Flex
-            flexDirection="row"
-            flexWrap="wrap"
-            width="1200px"
-            paddingY={{
-              "min-mobile": "75px",
-              "min-desktop": "100px",
-              "min-fullHD": "100px",
-            }}
-            paddingX={{
-              "min-mobile": "10px",
-            }}
-          >
-            {quizzes.map((quiz) => {
-              const { _id, id, userId, quizTitle } = quiz;
-              console.log(quiz);
+    <Fragment>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <motion.div
+          initial={{ x: -500, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ ease: "easeOut", duration: 2 }}
+        >
+          <BackButton routeName={Paths.StartPage} />
+          <Container display="flex" justifyContent="center">
+            <Flex
+              flexDirection="row"
+              flexWrap="wrap"
+              width="1200px"
+              paddingY={{
+                "min-mobile": "75px",
+                "min-desktop": "100px",
+                "min-fullHD": "100px",
+              }}
+              paddingX={{
+                "min-mobile": "10px",
+              }}
+            >
+              {quizzes.map((quiz) => {
+                const { _id, id, userId, quizTitle } = quiz;
+                console.log(quiz);
 
-              return (
-                <QuizCard
-                  key={id}
-                  quizDbId={_id}
-                  quizId={id}
-                  userQuizId={userId}
-                  quizTitle={quizTitle}
-                  userData={userData}
-                />
-              );
-            })}
-          </Flex>
-        )}
-      </Container>
-    </motion.div>
+                return (
+                  <QuizCard
+                    key={id}
+                    quizDbId={_id}
+                    quizId={id}
+                    userQuizId={userId}
+                    quizTitle={quizTitle}
+                    userData={userData}
+                  />
+                );
+              })}
+            </Flex>
+          </Container>
+        </motion.div>
+      )}
+    </Fragment>
   );
 };
 
