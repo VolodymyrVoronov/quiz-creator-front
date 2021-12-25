@@ -23,7 +23,7 @@ const StartPage: FC<{}> = (): JSX.Element => {
   };
 
   const onAllQuizzesButtonClick = () => {
-    navigation(Paths.AllQuizzesPage);
+    navigation(Paths.QuizzesPage);
   };
 
   return (

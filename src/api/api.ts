@@ -1,5 +1,14 @@
 import axios from "axios";
 
+import { IQuestion } from "store/quizCreatorStore";
+
+interface ISaveNewQuiz {
+  userId: any;
+  id: string;
+  quizTitle: string;
+  questions: IQuestion[];
+}
+
 const URL = `http://localhost:5000`;
 
 const instanceAPI = axios.create({
@@ -31,4 +40,8 @@ const signin = (data: { email: string; password: string }) => {
   return instanceAPI.post("/signin", data);
 };
 
-export { signup, signin };
+const saveNewQuiz = (data: ISaveNewQuiz) => {
+  return instanceAPI.post("/quiz", data);
+};
+
+export { signup, signin, saveNewQuiz };

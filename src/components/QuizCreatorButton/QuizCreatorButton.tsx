@@ -22,6 +22,8 @@ interface IQuizCreatorButtonProps {
   ml?: any;
   mb?: any;
   w?: any;
+  variant?: "outlined";
+  isLoading?: boolean;
 }
 
 const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
@@ -37,6 +39,8 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
   ml,
   mb,
   w,
+  variant,
+  isLoading,
 }): JSX.Element => {
   return (
     <Button
@@ -51,6 +55,8 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
       marginLeft={ml}
       marginBottom={mb}
       width={w}
+      variant={variant}
+      isLoading={isLoading}
     >
       {buttonText}
       {children}

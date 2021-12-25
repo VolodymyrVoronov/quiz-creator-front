@@ -1,11 +1,17 @@
 import create from "zustand";
 import produce from "immer";
+import axios from "axios";
+import { NavigateFunction } from "react-router-dom";
+
+import { saveNewQuiz } from "../api/api";
 
 import {
   createNewAnswerOption,
   createNewQuestion,
   createNewQuiz,
 } from "helpers/quizCreatorStore";
+
+import Paths from "const/path";
 
 export interface IAnswerOption {
   id: string;
@@ -14,13 +20,13 @@ export interface IAnswerOption {
   userAnswer: boolean;
 }
 
-interface IQuestion {
+export interface IQuestion {
   id: string;
   question: string;
   options: IAnswerOption[];
 }
 
-interface IQuiz {
+export interface IQuiz {
   id: string;
   quizTitle: string;
   questions: IQuestion[];
@@ -29,9 +35,11 @@ interface IQuiz {
 interface IQuizCreatorStore {
   quiz: IQuiz[] | [];
   isLoading: boolean;
+  errorMessage: string;
+  successMessage: string;
 
   createNewQuiz: () => void;
-  saveQuiz: () => void;
+  saveQuiz: (navigation: NavigateFunction) => Promise<void>;
   clearQuiz: () => void;
 
   updateQuizTitle: (data: string, id: string) => void;
@@ -52,6 +60,8 @@ interface IQuizCreatorStore {
 export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
   quiz: [],
   isLoading: false,
+  errorMessage: "",
+  successMessage: "",
 
   createNewQuiz: () => {
     set(
@@ -63,11 +73,42 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
     );
   },
 
-  saveQuiz: () => {
+  saveQuiz: async (navigation) => {
+    set({ successMessage: "", errorMessage: "" });
+
     const userId = JSON.parse(localStorage.getItem("userData") || "{}").id;
     const createdQuiz = get().quiz[0];
 
-    console.log({ ...createdQuiz, userId });
+    try {
+      set({ isLoading: true });
+
+      const response = await saveNewQuiz({ ...createdQuiz, userId });
+
+      if (response.status === 201) {
+        set({ successMessage: response.data.message });
+
+        const redirectTimeout = setTimeout(() => {
+          navigation(Paths.QuizzesPage);
+          get().clearQuiz();
+
+          clearTimeout(redirectTimeout);
+        }, 2500);
+      }
+
+      set({ isLoading: false });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.log(e?.response?.data.message);
+
+        set({ errorMessage: e?.response?.data.message });
+
+        if (e?.response?.data.message === undefined) {
+          set({ errorMessage: "Something went wrong. Try again a bit later." });
+        }
+
+        set({ isLoading: false });
+      }
+    }
   },
 
   clearQuiz: () => {

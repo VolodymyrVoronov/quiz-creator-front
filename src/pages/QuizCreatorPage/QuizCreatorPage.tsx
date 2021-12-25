@@ -1,5 +1,15 @@
-import { FC, useRef } from "react";
-import { Card, Container, Divider, Flex, Heading, Set, Text } from "bumbag";
+import { FC, Fragment, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Set,
+  Tag,
+  Text,
+} from "bumbag";
 import { ImPlus } from "react-icons/im";
 import { motion } from "framer-motion";
 
@@ -15,7 +25,16 @@ import QuizCreatorButton from "components/QuizCreatorButton/QuizCreatorButton";
 // import styles from "./QuizCreatorPage.module.css";
 
 const QuizCreatorPage: FC<{}> = (): JSX.Element => {
-  const { createNewQuiz, addNewQuestion, saveQuiz, quiz } = quizCreatorStore();
+  const navigation = useNavigate();
+  const {
+    createNewQuiz,
+    addNewQuestion,
+    saveQuiz,
+    quiz,
+    isLoading,
+    successMessage,
+    errorMessage,
+  } = quizCreatorStore();
 
   const divRef = useRef<null | HTMLElement>(null);
 
@@ -36,7 +55,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
   };
 
   const onSaveQuizButtonClick = () => {
-    saveQuiz();
+    saveQuiz(navigation);
   };
 
   const container = {
@@ -131,29 +150,45 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
           {quiz.length !== 0 && (
             <Card width="100%" marginTop="15px" ref={divRef}>
               <Set spacing="minor-5">
-                <QuizCreatorButton
-                  onClick={onAddNewQuestionButtonClick}
-                  palette="secondary"
-                  color="white"
-                  buttonText="Added new question"
-                  size="small"
-                  w={{
-                    "min-mobile": "100%",
-                    "min-desktop": "auto",
-                  }}
-                />
+                {!successMessage && (
+                  <Fragment>
+                    {" "}
+                    <QuizCreatorButton
+                      onClick={onAddNewQuestionButtonClick}
+                      palette="secondary"
+                      buttonText="Added new question"
+                      size="small"
+                      w={{
+                        "min-mobile": "100%",
+                        "min-desktop": "auto",
+                      }}
+                      variant="outlined"
+                    />
+                    <QuizCreatorButton
+                      onClick={onSaveQuizButtonClick}
+                      palette="success"
+                      buttonText="Save quiz"
+                      size="small"
+                      w={{
+                        "min-mobile": "100%",
+                        "min-desktop": "auto",
+                      }}
+                      variant="outlined"
+                      isLoading={isLoading}
+                    />
+                  </Fragment>
+                )}
 
-                <QuizCreatorButton
-                  onClick={onSaveQuizButtonClick}
-                  palette="success"
-                  color="white"
-                  buttonText="Save quiz"
-                  size="small"
-                  w={{
-                    "min-mobile": "100%",
-                    "min-desktop": "auto",
-                  }}
-                />
+                {successMessage && (
+                  <Tag palette="success" size="medium" color="white">
+                    {successMessage}
+                  </Tag>
+                )}
+                {errorMessage && (
+                  <Tag palette="danger" size="medium" color="white">
+                    {errorMessage}
+                  </Tag>
+                )}
               </Set>
             </Card>
           )}
