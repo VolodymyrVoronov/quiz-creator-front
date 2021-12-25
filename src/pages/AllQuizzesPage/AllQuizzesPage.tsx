@@ -1,6 +1,6 @@
 import { FC, Fragment, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Container, Flex } from "bumbag";
+import { Container, Flex, Tag } from "bumbag";
 
 import { quizStore } from "store/quizStore";
 import { authStore } from "store/authStore";
@@ -21,6 +21,22 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
 
   return (
     <Fragment>
+      <BackButton routeName={Paths.StartPage} />
+      {errorMessage && (
+        <Flex
+          position="absolute"
+          display="flex"
+          justifyContent="center"
+          left="50%"
+          top="50%"
+          transform="translate(-50%, -50%)"
+        >
+          <Tag palette="danger" size="medium" color="white">
+            {errorMessage}
+          </Tag>
+        </Flex>
+      )}
+
       {isLoading ? (
         <Loader />
       ) : (
@@ -29,7 +45,6 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ ease: "easeOut", duration: 2 }}
         >
-          <BackButton routeName={Paths.StartPage} />
           <Container display="flex" justifyContent="center">
             <Flex
               flexDirection="row"
