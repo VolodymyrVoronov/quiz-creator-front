@@ -93,11 +93,11 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
       if (response.status === 201) {
         set({ successMessage: response.data.message });
 
-        const redirectTimeout = setTimeout(() => {
+        const redirectingTimeout = setTimeout(() => {
           navigation(Paths.QuizzesPage);
           get().clearQuiz();
           set({ successMessage: "", errorMessage: "" });
-          clearTimeout(redirectTimeout);
+          clearTimeout(redirectingTimeout);
         }, 2500);
       }
 

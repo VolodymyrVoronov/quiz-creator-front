@@ -7,6 +7,7 @@ import {
   Flex,
   Heading,
   Set,
+  Spinner,
   Tag,
   Text,
 } from "bumbag";
@@ -178,9 +179,17 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                 )}
 
                 {successMessage && (
-                  <Tag palette="success" size="medium" color="white">
-                    {successMessage}
-                  </Tag>
+                  <Flex alignItems="center">
+                    <Set>
+                      <Tag palette="success" size="medium" color="white">
+                        {successMessage}
+                      </Tag>
+                      <Text display="flex" alignItems="center">
+                        Redirecting...&nbsp;&nbsp;
+                        <Spinner color="success" />
+                      </Text>
+                    </Set>
+                  </Flex>
                 )}
                 {errorMessage && (
                   <Tag palette="danger" size="medium" color="white">

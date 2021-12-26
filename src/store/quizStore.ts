@@ -92,9 +92,9 @@ export const quizStore = create<IQuizStore>((set, get) => ({
           })
         );
 
-        const redirectTimeout = setTimeout(() => {
+        const clearingTimeout = setTimeout(() => {
           set({ successMessage: "", errorMessage: "" });
-          clearTimeout(redirectTimeout);
+          clearTimeout(clearingTimeout);
         }, 2500);
       }
 
