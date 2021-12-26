@@ -76,7 +76,7 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
                 "min-mobile": "10px",
               }}
             >
-              {quizzes.length === 0 && (
+              {!errorMessage && quizzes.length === 0 && (
                 <NothingFound text="There aren't any quizzes yet. Create one." />
               )}
               {quizzes.map((quiz) => {
