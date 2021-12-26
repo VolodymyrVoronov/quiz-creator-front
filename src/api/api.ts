@@ -49,4 +49,8 @@ const fetchAllQuizzes = () => {
   return instanceAPI.get("/quiz");
 };
 
-export { signup, signin, saveNewQuiz, fetchAllQuizzes };
+const deleteQuiz = (quizDbId: string) => {
+  return instanceAPI.delete(`/quiz/${quizDbId}`);
+};
+
+export { signup, signin, saveNewQuiz, fetchAllQuizzes, deleteQuiz };

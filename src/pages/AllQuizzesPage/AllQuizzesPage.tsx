@@ -10,10 +10,11 @@ import Paths from "const/path";
 import Loader from "components/common/Loader/Loader";
 import QuizCard from "components/QuizCard/QuizCard";
 import BackButton from "components/common/BackButton/BackButton";
-import NothingFound from "components/NothingFound/NothingFound";
+import NothingFound from "components/common/NothingFound/NothingFound";
 
 const AllQuizzesPage: FC<{}> = (): JSX.Element => {
-  const { fetchAllQuizzes, quizzes, isLoading, errorMessage } = quizStore();
+  const { fetchAllQuizzes, quizzes, isLoading, successMessage, errorMessage } =
+    quizStore();
   const { userData } = authStore();
 
   useEffect(() => {
@@ -29,11 +30,26 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
           display="flex"
           justifyContent="center"
           left="50%"
-          top="50%"
+          top="5%"
           transform="translate(-50%, -50%)"
         >
           <Tag palette="danger" size="medium" color="white">
             {errorMessage}
+          </Tag>
+        </Flex>
+      )}
+
+      {successMessage && (
+        <Flex
+          position="absolute"
+          display="flex"
+          justifyContent="center"
+          left="50%"
+          top="5%"
+          transform="translate(-50%, -50%)"
+        >
+          <Tag palette="success" size="medium" color="white">
+            {successMessage}
           </Tag>
         </Flex>
       )}
@@ -66,7 +82,6 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
               {quizzes.map((quiz) => {
                 const { _id, id, userId, userAvatar, quizTitle, questions } =
                   quiz;
-                console.log(quiz);
 
                 return (
                   <QuizCard

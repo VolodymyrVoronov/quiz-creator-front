@@ -1,9 +1,8 @@
 import { FC } from "react";
-
 import { Avatar, Box, Button, Card, Divider, Flex, Set } from "bumbag";
 
 import { IUserData } from "store/authStore";
-import { IQuestion } from "store/quizStore";
+import { IQuestion, quizStore } from "store/quizStore";
 
 interface IQuizCardProps {
   quizDbId: string;
@@ -24,6 +23,12 @@ const QuizCard: FC<IQuizCardProps> = ({
   userData,
   questions,
 }): JSX.Element => {
+  const { deleteQuiz, isDeleting } = quizStore();
+
+  const onDeleteQuizButtonClick = (): void => {
+    deleteQuiz(quizDbId, quizId);
+  };
+
   return (
     <Card
       display="flex"
@@ -63,7 +68,13 @@ const QuizCard: FC<IQuizCardProps> = ({
             Start quiz
           </Button>
           {userQuizId === userData.id && (
-            <Button palette="danger" color="white" size="small">
+            <Button
+              onClick={onDeleteQuizButtonClick}
+              palette="danger"
+              color="white"
+              size="small"
+              isLoading={isDeleting}
+            >
               Delete quiz
             </Button>
           )}

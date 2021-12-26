@@ -31,6 +31,13 @@ const QuizCreatorPage = lazy(
     import(/* webpackPrefetch: true */ "pages/QuizCreatorPage/QuizCreatorPage")
 );
 
+const NothingFoundPage = lazy(
+  () =>
+    import(
+      /* webpackPrefetch: true */ "pages/NothingFoundPage/NothingFoundPage"
+    )
+);
+
 const App: FC<{}> = (): JSX.Element => {
   const toasts = useToasts();
   const navigation = useNavigate();
@@ -51,7 +58,7 @@ const App: FC<{}> = (): JSX.Element => {
           toasts.danger({
             title: "Token has been expired.",
             message: "Please sign in again.",
-            duration: 10000,
+            duration: 15000,
           });
 
           navigation(Paths.AuthPage);
@@ -60,7 +67,7 @@ const App: FC<{}> = (): JSX.Element => {
         }
       }
     }
-  }, []);
+  }, [navigation]);
 
   const isUserLogged = !checkIfObjectEmpty(userData);
 
@@ -84,7 +91,7 @@ const App: FC<{}> = (): JSX.Element => {
             <Route path={Paths.QuizCreator} element={<QuizCreatorPage />} />
           ) : null}
 
-          <Route path={Paths.NoPage} element={<p>Nothing found.</p>} />
+          <Route path={Paths.NoPage} element={<NothingFoundPage />} />
         </Routes>
       </Suspense>
     </Fragment>

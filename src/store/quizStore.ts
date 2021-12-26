@@ -1,7 +1,8 @@
 import create from "zustand";
 import axios from "axios";
 
-import { fetchAllQuizzes } from "api/api";
+import { fetchAllQuizzes, deleteQuiz } from "api/api";
+import produce from "immer";
 
 export interface IAnswerOption {
   id: string;
@@ -28,14 +29,20 @@ export interface IQuiz {
 interface IQuizStore {
   quizzes: IQuiz[];
   isLoading: boolean;
+  isDeleting: boolean;
   errorMessage: string;
+  successMessage: string;
 
   fetchAllQuizzes: () => Promise<void>;
+  deleteQuiz: (quizDbId: string, quizId: string) => Promise<void>;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
   quizzes: [],
   isLoading: false,
+  isDeleting: false,
+
+  successMessage: "",
   errorMessage: "",
 
   fetchAllQuizzes: async () => {
@@ -62,6 +69,47 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         }
 
         set({ isLoading: false });
+      }
+    }
+  },
+
+  deleteQuiz: async (quizDbId: string, quizId: string) => {
+    set({ errorMessage: "" });
+
+    try {
+      set({ isDeleting: true });
+
+      const response = await deleteQuiz(quizDbId);
+
+      if (response.status === 200) {
+        set({ successMessage: response.data.message });
+
+        set(
+          produce((state) => {
+            state.quizzes = state.quizzes.filter(
+              (quiz: { id: string }) => quiz.id !== quizId
+            );
+          })
+        );
+
+        const redirectTimeout = setTimeout(() => {
+          set({ successMessage: "", errorMessage: "" });
+          clearTimeout(redirectTimeout);
+        }, 2500);
+      }
+
+      set({ isDeleting: false });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.log(e?.response?.data.message);
+
+        set({ errorMessage: e?.response?.data.message });
+
+        if (e?.response?.data.message === undefined) {
+          set({ errorMessage: "Something went wrong. Try again a bit later." });
+        }
+
+        set({ isDeleting: false });
       }
     }
   },
