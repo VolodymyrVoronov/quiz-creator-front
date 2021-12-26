@@ -20,6 +20,7 @@ export interface IQuiz {
   id: string;
   _id: string;
   userId: string;
+  userAvatar: string;
   quizTitle: string;
   questions: IQuestion[];
 }

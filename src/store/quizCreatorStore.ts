@@ -76,13 +76,19 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
   saveQuiz: async (navigation) => {
     set({ successMessage: "", errorMessage: "" });
 
-    const userId = JSON.parse(localStorage.getItem("userData") || "{}").id;
+    const { id: userId, avatar: userAvatar } = JSON.parse(
+      localStorage.getItem("userData") || "{}"
+    );
     const createdQuiz = get().quiz[0];
 
     try {
       set({ isLoading: true });
 
-      const response = await saveNewQuiz({ ...createdQuiz, userId });
+      const response = await saveNewQuiz({
+        ...createdQuiz,
+        userId,
+        userAvatar,
+      });
 
       if (response.status === 201) {
         set({ successMessage: response.data.message });

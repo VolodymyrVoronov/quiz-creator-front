@@ -3,7 +3,8 @@ import axios from "axios";
 import { IQuestion } from "store/quizCreatorStore";
 
 interface ISaveNewQuiz {
-  userId: any;
+  userId: string;
+  userAvatar: string;
   id: string;
   quizTitle: string;
   questions: IQuestion[];

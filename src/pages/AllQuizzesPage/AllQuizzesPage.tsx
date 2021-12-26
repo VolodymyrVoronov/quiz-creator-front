@@ -10,6 +10,7 @@ import Paths from "const/path";
 import Loader from "components/common/Loader/Loader";
 import QuizCard from "components/QuizCard/QuizCard";
 import BackButton from "components/common/BackButton/BackButton";
+import NothingFound from "components/NothingFound/NothingFound";
 
 const AllQuizzesPage: FC<{}> = (): JSX.Element => {
   const { fetchAllQuizzes, quizzes, isLoading, errorMessage } = quizStore();
@@ -59,8 +60,12 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
                 "min-mobile": "10px",
               }}
             >
+              {quizzes.length === 0 && (
+                <NothingFound text="There aren't any quizzes yet. Create one." />
+              )}
               {quizzes.map((quiz) => {
-                const { _id, id, userId, quizTitle } = quiz;
+                const { _id, id, userId, userAvatar, quizTitle, questions } =
+                  quiz;
                 console.log(quiz);
 
                 return (
@@ -69,8 +74,10 @@ const AllQuizzesPage: FC<{}> = (): JSX.Element => {
                     quizDbId={_id}
                     quizId={id}
                     userQuizId={userId}
+                    userQuizAvatar={userAvatar}
                     quizTitle={quizTitle}
                     userData={userData}
+                    questions={questions}
                   />
                 );
               })}

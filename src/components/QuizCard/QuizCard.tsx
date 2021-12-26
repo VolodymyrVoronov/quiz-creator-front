@@ -1,45 +1,74 @@
 import { FC } from "react";
 
-import { Card } from "bumbag";
+import { Avatar, Box, Button, Card, Divider, Flex, Set } from "bumbag";
 
 import { IUserData } from "store/authStore";
+import { IQuestion } from "store/quizStore";
 
 interface IQuizCardProps {
   quizDbId: string;
   quizId: string;
   userQuizId: string;
+  userQuizAvatar: string;
   quizTitle: string;
   userData: IUserData;
+  questions: IQuestion[];
 }
 
 const QuizCard: FC<IQuizCardProps> = ({
   quizDbId,
   quizId,
   userQuizId,
+  userQuizAvatar,
   quizTitle,
   userData,
+  questions,
 }): JSX.Element => {
   return (
     <Card
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
       width={{
         "min-mobile": "100%",
-        "min-desktop": "48%",
+        "min-desktop": "100%",
+        "min-fullHD": "48%",
       }}
       margin="1%"
       standalone
     >
-      <Card.Header>
-        <Card.Title>{quizTitle}</Card.Title>
-      </Card.Header>
+      <Flex flexDirection="column">
+        <Card.Header>
+          <Card.Title
+            fontSize={{
+              "min-mobile": "16px",
+              "min-desktop": "20px",
+              "min-fullHD": "22px",
+            }}
+          >
+            {quizTitle}
+          </Card.Title>
 
-      <Card.Content>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-        diam ipsum, cursus id placerat congue, ultrices eget lectus. Duis
-        posuere, lacus sed tristique commodo, sapien turpis mollis nunc,
-        vestibulum consectetur lectus augue sit amet justo.
-      </Card.Content>
+          <Box alignSelf="flex-start" marginLeft="30px">
+            <Avatar src={userQuizAvatar} alt="Avatar of quiz's author" />
+          </Box>
+        </Card.Header>
+        <Card.Content>Questions: {questions.length}</Card.Content>
+      </Flex>
 
-      <Card.Footer>Button</Card.Footer>
+      <Card.Footer>
+        <Divider marginBottom="15px" />
+        <Set>
+          <Button palette="primary" color="white" size="small">
+            Start quiz
+          </Button>
+          {userQuizId === userData.id && (
+            <Button palette="danger" color="white" size="small">
+              Delete quiz
+            </Button>
+          )}
+        </Set>
+      </Card.Footer>
     </Card>
   );
 };
