@@ -1,8 +1,8 @@
 import create from "zustand";
 import axios from "axios";
+import produce from "immer";
 
 import { fetchAllQuizzes, deleteQuiz } from "api/api";
-import produce from "immer";
 
 export interface IAnswerOption {
   id: string;
@@ -32,9 +32,16 @@ interface IQuizStore {
   isDeleting: boolean;
   errorMessage: string;
   successMessage: string;
+  chosenQuiz: IQuiz | undefined;
 
   fetchAllQuizzes: () => Promise<void>;
   deleteQuiz: (quizDbId: string, quizId: string) => Promise<void>;
+  startQuiz: (quizId: string) => void;
+  setUserAnswer: (
+    questionId: string,
+    optionId: string,
+    userAnswer: boolean
+  ) => void;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
@@ -44,6 +51,8 @@ export const quizStore = create<IQuizStore>((set, get) => ({
 
   successMessage: "",
   errorMessage: "",
+
+  chosenQuiz: undefined,
 
   fetchAllQuizzes: async () => {
     set({ errorMessage: "" });
@@ -112,5 +121,33 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         set({ isDeleting: false });
       }
     }
+  },
+
+  startQuiz: (quizId: string) => {
+    set(
+      produce((state) => {
+        state.chosenQuiz = state.quizzes.find(
+          (quiz: { id: string }) => quiz.id === quizId
+        );
+      })
+    );
+  },
+
+  setUserAnswer: (
+    questionId: string,
+    optionId: string,
+    userAnswer: boolean
+  ) => {
+    set(
+      produce((state) => {
+        const updatedAnswerOption = state.chosenQuiz.questions.find(
+          (question: { id: string }) => question.id === questionId
+        );
+
+        updatedAnswerOption.options.find(
+          (option: { id: string }) => option.id === optionId
+        ).userAnswer = userAnswer;
+      })
+    );
   },
 }));

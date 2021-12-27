@@ -28,9 +28,10 @@ const QuizCard: FC<IQuizCardProps> = ({
 }): JSX.Element => {
   const navigation = useNavigate();
 
-  const { deleteQuiz, isDeleting } = quizStore();
+  const { deleteQuiz, isDeleting, startQuiz } = quizStore();
 
   const onStartQuizButtonClick = (): void => {
+    startQuiz(quizId);
     navigation(`${Paths.QuizzesPage}/quiz/${quizId}`);
   };
 
