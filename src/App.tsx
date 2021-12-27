@@ -22,6 +22,10 @@ const AllQuizzesPage = lazy(
     import(/* webpackPrefetch: true */ "pages/AllQuizzesPage/AllQuizzesPage")
 );
 
+const QuizPage = lazy(
+  () => import(/* webpackPrefetch: true */ "pages/QuizPage/QuizPage")
+);
+
 const AuthFormPage = lazy(
   () => import(/* webpackPrefetch: true */ "pages/AuthFormPage/AuthFormPage")
 );
@@ -86,6 +90,7 @@ const App: FC<{}> = (): JSX.Element => {
           <Route path={Paths.AuthPage} element={<AuthPage />} />
           <Route path={Paths.AuthFormPage} element={<AuthFormPage />} />
           <Route path={Paths.QuizzesPage} element={<AllQuizzesPage />} />
+          <Route path={Paths.QuizPage} element={<QuizPage />} />
 
           {isUserLogged ? (
             <Route path={Paths.QuizCreator} element={<QuizCreatorPage />} />

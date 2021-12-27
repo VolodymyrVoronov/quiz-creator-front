@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, Fragment, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ImEnter, ImKey2 } from "react-icons/im";
 
@@ -27,7 +27,7 @@ const AuthPage: FC<{}> = (): JSX.Element => {
   };
 
   return (
-    <>
+    <Fragment>
       <BackButton routeName={Paths.StartPage} />
       <PageLayout
         pageTitle="Authentication"
@@ -40,7 +40,7 @@ const AuthPage: FC<{}> = (): JSX.Element => {
         bottomButtonArialLabel="Sign up button"
         bottomButtonIcon={<ImKey2 />}
       />
-    </>
+    </Fragment>
   );
 };
 

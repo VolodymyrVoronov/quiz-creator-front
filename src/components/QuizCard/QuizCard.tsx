@@ -1,8 +1,11 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { Avatar, Box, Button, Card, Divider, Flex, Set } from "bumbag";
 
 import { IUserData } from "store/authStore";
 import { IQuestion, quizStore } from "store/quizStore";
+
+import Paths from "const/path";
 
 interface IQuizCardProps {
   quizDbId: string;
@@ -23,7 +26,13 @@ const QuizCard: FC<IQuizCardProps> = ({
   userData,
   questions,
 }): JSX.Element => {
+  const navigation = useNavigate();
+
   const { deleteQuiz, isDeleting } = quizStore();
+
+  const onStartQuizButtonClick = (): void => {
+    navigation(`${Paths.QuizzesPage}/quiz/${quizId}`);
+  };
 
   const onDeleteQuizButtonClick = (): void => {
     deleteQuiz(quizDbId, quizId);
@@ -64,7 +73,12 @@ const QuizCard: FC<IQuizCardProps> = ({
       <Card.Footer>
         <Divider marginBottom="15px" />
         <Set>
-          <Button palette="primary" color="white" size="small">
+          <Button
+            onClick={onStartQuizButtonClick}
+            palette="primary"
+            color="white"
+            size="small"
+          >
             Start quiz
           </Button>
           {userQuizId === userData.id && (

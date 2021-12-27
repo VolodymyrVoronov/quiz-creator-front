@@ -82,6 +82,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
       animate={{ x: 0, opacity: 1 }}
       transition={{ ease: "easeOut", duration: 2 }}
     >
+      <BackButton routeName={Paths.StartPage} />
       <Container display="flex" justifyContent="center">
         <Flex
           flexDirection="column"
@@ -96,7 +97,6 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
             "min-mobile": "10px",
           }}
         >
-          <BackButton routeName={Paths.StartPage} />
           <Card width="100%">
             <Heading use="h3" textAlign="center">
               Quiz Creator

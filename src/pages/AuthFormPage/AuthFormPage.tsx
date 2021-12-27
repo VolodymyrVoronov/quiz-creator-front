@@ -137,6 +137,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
       animate={{ x: 0, opacity: 1 }}
       transition={{ ease: "easeOut", duration: 2 }}
     >
+      <BackButton routeName={Paths.AuthPage} onClick={onBackButtonClick} />
       <Flex
         flexDirection="row"
         justifyContent="center"
@@ -151,8 +152,6 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
           "min-fullHD": "50px",
         }}
       >
-        <BackButton routeName={Paths.AuthPage} onClick={onBackButtonClick} />
-
         <Card width="600px" variant="shadowed">
           <motion.span
             initial={{ opacity: 0 }}

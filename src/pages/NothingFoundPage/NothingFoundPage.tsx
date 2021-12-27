@@ -14,6 +14,7 @@ const NothingFoundPage: FC<{}> = (): JSX.Element => {
       animate={{ x: 0, opacity: 1 }}
       transition={{ ease: "easeOut", duration: 2 }}
     >
+      <BackButton routeName={Paths.StartPage} />
       <Flex
         flexDirection="row"
         justifyContent="center"
@@ -28,8 +29,6 @@ const NothingFoundPage: FC<{}> = (): JSX.Element => {
           "min-fullHD": "50px",
         }}
       >
-        <BackButton routeName={Paths.StartPage} />
-
         <NothingFound text="Page not found" />
       </Flex>
     </motion.div>
