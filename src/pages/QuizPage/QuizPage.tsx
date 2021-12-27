@@ -24,7 +24,7 @@ import ChosenQuizAnswerOption from "components/ChosenQuizAnswerOption/ChosenQuiz
 const QuizPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
 
-  const { chosenQuiz } = quizStore();
+  const { chosenQuiz, getQuizResult } = quizStore();
 
   const [numberOfTheQuestion, setNumberOfTheQuestion] = useState(0);
 
@@ -38,8 +38,10 @@ const QuizPage: FC<{}> = (): JSX.Element => {
     setNumberOfTheQuestion(numberOfTheQuestion + 1);
   };
 
-  const onShowResultsButtonClick = (): void => {
+  const onShowResultButtonClick = (): void => {
     console.log(chosenQuiz);
+    getQuizResult();
+    navigation(Paths.ResultPage, { replace: true });
   };
 
   const questionToAnswer = chosenQuiz?.questions[numberOfTheQuestion];
@@ -106,7 +108,7 @@ const QuizPage: FC<{}> = (): JSX.Element => {
               <Flex justifyContent="center" marginTop="25px">
                 {isEndOfQuiz && (
                   <Button
-                    onClick={onShowResultsButtonClick}
+                    onClick={onShowResultButtonClick}
                     palette="secondary"
                     color="white"
                     size="small"

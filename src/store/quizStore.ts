@@ -33,6 +33,10 @@ interface IQuizStore {
   errorMessage: string;
   successMessage: string;
   chosenQuiz: IQuiz | undefined;
+  quizResult: {
+    correctAnswers: number;
+    wrongAnswers: number;
+  };
 
   fetchAllQuizzes: () => Promise<void>;
   deleteQuiz: (quizDbId: string, quizId: string) => Promise<void>;
@@ -42,6 +46,7 @@ interface IQuizStore {
     optionId: string,
     userAnswer: boolean
   ) => void;
+  getQuizResult: () => void;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
@@ -53,6 +58,10 @@ export const quizStore = create<IQuizStore>((set, get) => ({
   errorMessage: "",
 
   chosenQuiz: undefined,
+  quizResult: {
+    correctAnswers: 0,
+    wrongAnswers: 0,
+  },
 
   fetchAllQuizzes: async () => {
     set({ errorMessage: "" });
@@ -147,6 +156,28 @@ export const quizStore = create<IQuizStore>((set, get) => ({
         updatedAnswerOption.options.find(
           (option: { id: string }) => option.id === optionId
         ).userAnswer = userAnswer;
+      })
+    );
+  },
+
+  getQuizResult: () => {
+    set(
+      produce((state) => {
+        state.chosenQuiz.questions.forEach((question: IQuestion) => {
+          const correctAnswer = question.options.find(
+            (option: IAnswerOption) => option.correct === true
+          );
+
+          const userAnswer = question.options.find(
+            (option: IAnswerOption) => option.userAnswer === true
+          );
+
+          if (correctAnswer?.id === userAnswer?.id) {
+            state.quizResult.correctAnswers++;
+          } else {
+            state.quizResult.wrongAnswers++;
+          }
+        });
       })
     );
   },

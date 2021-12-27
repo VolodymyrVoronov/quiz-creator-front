@@ -5,6 +5,7 @@ enum Paths {
   AuthFormPage = "/authentication/form",
   QuizCreator = "/quiz-creator",
   QuizzesPage = "/quizzes",
+  ResultPage = "/result",
   QuizPage = "/quizzes/quiz/:id",
   NoPage = "*",
 }

@@ -26,6 +26,10 @@ const QuizPage = lazy(
   () => import(/* webpackPrefetch: true */ "pages/QuizPage/QuizPage")
 );
 
+const ResultPage = lazy(
+  () => import(/* webpackPrefetch: true */ "pages/ResultPage/ResultPage")
+);
+
 const AuthFormPage = lazy(
   () => import(/* webpackPrefetch: true */ "pages/AuthFormPage/AuthFormPage")
 );
@@ -45,7 +49,7 @@ const NothingFoundPage = lazy(
 const App: FC<{}> = (): JSX.Element => {
   const toasts = useToasts();
   const navigation = useNavigate();
-  const { setUserData, userData } = authStore();
+  const { setUserData, logOut, userData } = authStore();
 
   const userDataLS = JSON.parse(localStorage.getItem("userData") || "{}");
 
@@ -65,6 +69,7 @@ const App: FC<{}> = (): JSX.Element => {
             duration: 15000,
           });
 
+          logOut();
           navigation(Paths.AuthPage);
         } else {
           setUserData(userDataLS);
@@ -91,6 +96,7 @@ const App: FC<{}> = (): JSX.Element => {
           <Route path={Paths.AuthFormPage} element={<AuthFormPage />} />
           <Route path={Paths.QuizzesPage} element={<AllQuizzesPage />} />
           <Route path={Paths.QuizPage} element={<QuizPage />} />
+          <Route path={Paths.ResultPage} element={<ResultPage />} />
 
           {isUserLogged ? (
             <Route path={Paths.QuizCreator} element={<QuizCreatorPage />} />

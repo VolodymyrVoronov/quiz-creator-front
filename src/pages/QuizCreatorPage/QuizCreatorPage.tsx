@@ -151,7 +151,6 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
               <Set spacing="minor-5">
                 {!successMessage && (
                   <Fragment>
-                    {" "}
                     <QuizCreatorButton
                       onClick={onAddNewQuestionButtonClick}
                       palette="secondary"

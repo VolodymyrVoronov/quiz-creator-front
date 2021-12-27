@@ -13,7 +13,7 @@ const ChosenQuizAnswerOption: FC<IChosenQuizAnswerOptionProps> = ({
   questionToAnswer,
 }): JSX.Element => {
   return (
-    <Set orientation="vertical">
+    <Set orientation="vertical" spacing="minor-5">
       {questionToAnswer?.options.map((option) => {
         const { id, answerOption, userAnswer } = option;
 
