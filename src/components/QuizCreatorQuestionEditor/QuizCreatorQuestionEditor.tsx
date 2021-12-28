@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { Box, Divider, Flex, Input, Set, Tag, Text } from "bumbag";
 import { motion } from "framer-motion";
 import { ImBin } from "react-icons/im";
@@ -22,11 +22,19 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
   options,
   amountOfQuestions,
 }): JSX.Element => {
-  const { updateQuestionTitle, addNewAnswerOption, deleteQuestion } =
-    quizCreatorStore();
+  const {
+    updateQuestionTitle,
+    addNewAnswerOption,
+    deleteQuestion,
+    checkValidQuiz,
+  } = quizCreatorStore();
 
   const [editingMode, setEditingMode] = useState<boolean>(false);
   const [questionTitle, setQuestionTitle] = useState<string>("Question title");
+
+  useEffect(() => {
+    checkValidQuiz(options.some((option) => option.correct === true));
+  }, [options, checkValidQuiz]);
 
   const onEditButtonClick = useCallback(() => {
     setEditingMode(() => true);
@@ -174,6 +182,7 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
             "min-mobile": "100%",
             "min-desktop": "auto",
           }}
+          isButtonDisabled={!isAtLeastOneOptionCorrect}
         />
 
         {amountOfQuestions >= 2 && (

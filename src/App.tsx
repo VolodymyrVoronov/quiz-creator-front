@@ -66,7 +66,7 @@ const App: FC<{}> = (): JSX.Element => {
           toasts.danger({
             title: "Token has been expired.",
             message: "Please sign in again.",
-            duration: 5000,
+            timeout: 15000,
           });
 
           logOut();

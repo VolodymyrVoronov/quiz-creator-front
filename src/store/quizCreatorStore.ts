@@ -37,6 +37,7 @@ interface IQuizCreatorStore {
   isLoading: boolean;
   errorMessage: string;
   successMessage: string;
+  isQuizValid: boolean;
 
   createNewQuiz: () => void;
   saveQuiz: (navigation: NavigateFunction) => Promise<void>;
@@ -55,6 +56,8 @@ interface IQuizCreatorStore {
 
   addNewAnswerOption: (questionId: string) => void;
   addNewQuestion: (quizId: string) => void;
+
+  checkValidQuiz: (flag: boolean) => void;
 }
 
 export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
@@ -62,6 +65,7 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
   isLoading: false,
   errorMessage: "",
   successMessage: "",
+  isQuizValid: false,
 
   createNewQuiz: () => {
     set(
@@ -215,6 +219,14 @@ export const quizCreatorStore = create<IQuizCreatorStore>((set, get) => ({
         );
 
         updatedQuiz.questions.push(createNewQuestion());
+      })
+    );
+  },
+
+  checkValidQuiz: (flag: boolean) => {
+    set(
+      produce((state) => {
+        state.isQuizValid = flag;
       })
     );
   },

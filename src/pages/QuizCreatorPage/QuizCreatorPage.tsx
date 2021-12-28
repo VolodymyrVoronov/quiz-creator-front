@@ -33,6 +33,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
     isLoading,
     successMessage,
     errorMessage,
+    isQuizValid,
   } = quizCreatorStore();
 
   const divRef = useRef<null | HTMLElement>(null);
@@ -173,6 +174,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                       }}
                       variant="outlined"
                       isLoading={isLoading}
+                      isButtonDisabled={!isQuizValid}
                     />
                   </Fragment>
                 )}
