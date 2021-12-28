@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Checkbox } from "bumbag";
 
 import { quizStore } from "store/quizStore";
@@ -13,12 +13,9 @@ const ChosenQuizAnswerOptionCheckBox: FC<IChosenQuizAnswerOptionCheckBoxProps> =
   ({ questionId, optionId, userAnswer }): JSX.Element => {
     const { setUserAnswer } = quizStore();
 
-    const [checked, setChecked] = useState(userAnswer);
-
     const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.checked;
 
-      setChecked(value);
       setUserAnswer(questionId, optionId, value);
     };
 
@@ -31,7 +28,7 @@ const ChosenQuizAnswerOptionCheckBox: FC<IChosenQuizAnswerOptionCheckBoxProps> =
           "min-desktop": "22px",
           "min-fullHD": "26px",
         }}
-        checked={checked}
+        checked={userAnswer}
       />
     );
   };

@@ -39,7 +39,6 @@ const QuizPage: FC<{}> = (): JSX.Element => {
   };
 
   const onShowResultButtonClick = (): void => {
-    console.log(chosenQuiz);
     getQuizResult();
     navigation(Paths.ResultPage, { replace: true });
   };
@@ -49,6 +48,10 @@ const QuizPage: FC<{}> = (): JSX.Element => {
   const isEndOfQuiz = numberOfTheQuestion === (amountOfQuestions as number) - 1;
   const progress =
     ((numberOfTheQuestion + 1) / (amountOfQuestions as number)) * 100;
+
+  const isAtLeastOneUserAnswerSelected = questionToAnswer?.options.some(
+    (option) => option.userAnswer === true
+  );
 
   return (
     <motion.div
@@ -113,6 +116,7 @@ const QuizPage: FC<{}> = (): JSX.Element => {
                     color="white"
                     size="small"
                     type="button"
+                    disabled={!isAtLeastOneUserAnswerSelected}
                   >
                     Show result
                   </Button>
@@ -125,6 +129,7 @@ const QuizPage: FC<{}> = (): JSX.Element => {
                     color="white"
                     size="small"
                     type="button"
+                    disabled={!isAtLeastOneUserAnswerSelected}
                   >
                     Next question
                   </Button>

@@ -47,6 +47,7 @@ interface IQuizStore {
     userAnswer: boolean
   ) => void;
   getQuizResult: () => void;
+  resetChosenQuiz: () => void;
 }
 
 export const quizStore = create<IQuizStore>((set, get) => ({
@@ -161,23 +162,48 @@ export const quizStore = create<IQuizStore>((set, get) => ({
   },
 
   getQuizResult: () => {
+    const answeredQuestions = get().chosenQuiz && get()?.chosenQuiz?.questions;
+
+    if (answeredQuestions) {
+      for (let i = 0; i < answeredQuestions.length; i++) {
+        const correctAnswer = answeredQuestions[i].options.map(
+          (o) => o.correct
+        );
+        const correctUserAnswer = answeredQuestions[i].options.map(
+          (o) => o.userAnswer
+        );
+
+        if (
+          JSON.stringify(correctAnswer) === JSON.stringify(correctUserAnswer)
+        ) {
+          set(
+            produce((state) => {
+              state.quizResult.correctAnswers += 1;
+            })
+          );
+        }
+
+        if (
+          JSON.stringify(correctAnswer) !== JSON.stringify(correctUserAnswer)
+        ) {
+          set(
+            produce((state) => {
+              state.quizResult.wrongAnswers += 1;
+            })
+          );
+        }
+      }
+    }
+  },
+
+  resetChosenQuiz: () => {
     set(
       produce((state) => {
-        state.chosenQuiz.questions.forEach((question: IQuestion) => {
-          const correctAnswer = question.options.find(
-            (option: IAnswerOption) => option.correct === true
-          );
-
-          const userAnswer = question.options.find(
-            (option: IAnswerOption) => option.userAnswer === true
-          );
-
-          if (correctAnswer?.id === userAnswer?.id) {
-            state.quizResult.correctAnswers++;
-          } else {
-            state.quizResult.wrongAnswers++;
-          }
-        });
+        state.chosenQuiz = undefined;
+        state.quizResult = {
+          correctAnswers: 0,
+          wrongAnswers: 0,
+        };
       })
     );
   },

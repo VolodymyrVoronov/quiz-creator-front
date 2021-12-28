@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
-import { Box, Divider, Flex, Input, Set, Text } from "bumbag";
+import { Box, Divider, Flex, Input, Set, Tag, Text } from "bumbag";
 import { motion } from "framer-motion";
 import { ImBin } from "react-icons/im";
 
@@ -80,6 +80,10 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
     },
   };
 
+  const isAtLeastOneOptionCorrect = options.some(
+    (option) => option.correct === true
+  );
+
   return (
     <Flex width="100%" flexDirection="column">
       <Text>Question title:</Text>
@@ -146,6 +150,20 @@ const QuizCreatorQuestionEditor: FC<IQuizCreatorTitleEditorProps> = ({
       </Flex>
 
       <Set orientation="vertical" spacing="minor-3" marginTop="10px">
+        {!isAtLeastOneOptionCorrect && (
+          <Tag
+            palette="warning"
+            size="medium"
+            fontSize={{
+              "min-mobile": "12px",
+              "min-tablet": "14px",
+              "min-desktop": "16px",
+            }}
+          >
+            At least one option should be correct
+          </Tag>
+        )}
+
         <QuizCreatorButton
           onClick={onAddNewAnswerOptionButtonClick}
           size="small"
