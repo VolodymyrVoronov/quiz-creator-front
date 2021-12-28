@@ -3,6 +3,7 @@ import axios from "axios";
 import produce from "immer";
 
 import { fetchAllQuizzes, deleteQuiz } from "api/api";
+import { compareTwoArrays } from "helpers/compareTwoArrays";
 
 export interface IAnswerOption {
   id: string;
@@ -173,9 +174,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
           (o) => o.userAnswer
         );
 
-        if (
-          JSON.stringify(correctAnswer) === JSON.stringify(correctUserAnswer)
-        ) {
+        if (compareTwoArrays(correctAnswer, correctUserAnswer)) {
           set(
             produce((state) => {
               state.quizResult.correctAnswers += 1;
@@ -183,9 +182,7 @@ export const quizStore = create<IQuizStore>((set, get) => ({
           );
         }
 
-        if (
-          JSON.stringify(correctAnswer) !== JSON.stringify(correctUserAnswer)
-        ) {
+        if (!compareTwoArrays(correctAnswer, correctUserAnswer)) {
           set(
             produce((state) => {
               state.quizResult.wrongAnswers += 1;
