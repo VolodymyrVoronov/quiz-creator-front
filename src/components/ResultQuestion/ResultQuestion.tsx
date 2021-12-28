@@ -60,13 +60,12 @@ const ResultQuestion: FC<IResultQuestionProps> = ({
               _hover={{
                 transition: "0.2s ease-in-out",
                 backgroundColor: "rgba(0,0,0, 0.05)",
-                cursor: "pointer",
               }}
             >
               <Text width="100%">
                 <Flex>
                   <Box style={{ marginRight: "auto" }}>
-                    {index + 1}. {answerOption}
+                    <strong>{index + 1}.</strong> {answerOption}
                   </Box>
                   <Set>
                     {isCorrect}

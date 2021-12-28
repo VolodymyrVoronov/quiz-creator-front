@@ -7,6 +7,7 @@ import { quizStore } from "store/quizStore";
 
 import Paths from "const/path";
 import ResultQuestion from "components/ResultQuestion/ResultQuestion";
+import ResultChart from "components/ResultChart/ResultChart";
 
 const ResultPage: FC<{}> = (): JSX.Element => {
   const navigation = useNavigate();
@@ -105,6 +106,18 @@ const ResultPage: FC<{}> = (): JSX.Element => {
                   );
                 })}
               </Set>
+
+              <Box
+                width={{
+                  "min-mobile": "75%",
+                  "min-desktop": "50%",
+                }}
+                marginY="25px"
+              >
+                <ResultChart chartData={quizResult} />
+              </Box>
+
+              <Divider width="100%" marginY="15px" />
 
               <Box width="100%" marginTop="15px">
                 <Button
