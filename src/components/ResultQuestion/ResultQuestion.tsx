@@ -19,7 +19,7 @@ const ResultQuestion: FC<IResultQuestionProps> = ({
           fontSize={{
             "min-mobile": "16px",
             "min-desktop": "20px",
-            "min-fullHD": "22px",
+            "min-fullHD": "24px",
           }}
           fontWeight="bold"
         >
@@ -47,27 +47,29 @@ const ResultQuestion: FC<IResultQuestionProps> = ({
             </Tag>
           );
 
-          const UserAnswer = userAnswer === true && <Tag>Your answer</Tag>;
+          const UserAnswer = userAnswer === true && <Tag>Your answered</Tag>;
 
           return (
             <Flex
               key={id}
               width="100%"
               padding="5px"
-              transition="0.2s ease-in-out"
-              border="1px solid rgba(0,0,0, 0.05)"
+              border="1px solid rgba(0,0,0, 0.1)"
               borderRadius="5px"
-              _hover={{
-                transition: "0.2s ease-in-out",
-                backgroundColor: "rgba(0,0,0, 0.05)",
-              }}
+              backgroundColor={
+                correct === true
+                  ? "rgba(103,198,185, 0.05)"
+                  : correct === false
+                  ? "rgba(243,112,91, 0.05)"
+                  : "white"
+              }
             >
               <Text width="100%">
-                <Flex>
+                <Flex flexDirection="column">
                   <Box style={{ marginRight: "auto" }}>
-                    <strong>{index + 1}.</strong> {answerOption}
+                    <strong>{index + 1}.{" "}</strong> {answerOption}
                   </Box>
-                  <Set>
+                  <Set marginTop="2px">
                     {isCorrect}
                     {isWrong}
                     {UserAnswer}
