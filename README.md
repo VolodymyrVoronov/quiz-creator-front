@@ -11,6 +11,37 @@
 - Try users' quizzes;
 - Get detailed result at the end of the quiz;
 
+**Start page**
+![](./screenshots/start-page.JPG)
+
+**Authentication page**
+![](./screenshots/auth-page.JPG)
+
+**Sign in form page**
+![](./screenshots/signin-form.JPG)
+
+**Sign up form page**
+![](./screenshots/signup-form.JPG)
+
+**Quiz creator page**
+![](./screenshots/creator-page-1.JPG)
+
+**Quiz creator page**
+![](./screenshots/creator-page-2.JPG)
+
+**All quizzes page**
+![](./screenshots/all-quizzes-page.JPG)
+
+**Quiz page**
+![](./screenshots/quiz-page.JPG)
+
+**Quiz result page**
+![](./screenshots/quiz-result-page-1.JPG)
+
+**Quiz result page**
+![](./screenshots/quiz-result-page-2.JPG)
+
+
 
 To install und run the project:
 
