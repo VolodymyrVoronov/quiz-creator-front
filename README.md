@@ -1,6 +1,6 @@
 ### Quiz Creator - Front-End Part.
 
-**Tools**: TS, ReactJS, Zustand, Immer, React-Router-Dom, React-Icons, Bumbag, React-Chartjs-2, Framer-Motion, IniqId, Axios, JWT-Decode.
+**Tools**: TS, ReactJS, Zustand, Immer, React-Router-Dom, React-Icons, Bumbag, React-Chartjs-2, Framer-Motion, UniqId, Axios, JWT-Decode.
 
 
 ### Features:
