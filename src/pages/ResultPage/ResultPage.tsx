@@ -6,6 +6,7 @@ import { Box, Button, Card, Container, Divider, Flex, Set, Text } from "bumbag";
 import { quizStore } from "store/quizStore";
 
 import Paths from "const/path";
+
 import ResultQuestion from "components/ResultQuestion/ResultQuestion";
 import ResultChart from "components/ResultChart/ResultChart";
 
@@ -19,7 +20,7 @@ const ResultPage: FC<{}> = (): JSX.Element => {
     }
   }, [chosenQuiz, navigation]);
 
-  const onAllQuizzesButtonClick = (): void => {
+  const onToAllQuizzesButtonClick = (): void => {
     navigation(Paths.QuizzesPage);
     resetChosenQuiz();
   };
@@ -121,7 +122,7 @@ const ResultPage: FC<{}> = (): JSX.Element => {
 
               <Box width="100%" marginTop="15px">
                 <Button
-                  onClick={onAllQuizzesButtonClick}
+                  onClick={onToAllQuizzesButtonClick}
                   palette="gray"
                   type="button"
                 >
