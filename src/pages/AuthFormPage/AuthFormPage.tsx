@@ -204,7 +204,7 @@ const AuthFormPage: FC<{}> = (): JSX.Element => {
                         backgroundColor="white"
                       />
                     ) : (
-                      <Box fontSize="60px">
+                      <Box fontSize="60px" data-testid="test-avatar">
                         <ImUser />
                       </Box>
                     )}
