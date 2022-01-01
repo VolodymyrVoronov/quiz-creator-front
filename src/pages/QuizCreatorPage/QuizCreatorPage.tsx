@@ -155,7 +155,7 @@ const QuizCreatorPage: FC<{}> = (): JSX.Element => {
                     <QuizCreatorButton
                       onClick={onAddNewQuestionButtonClick}
                       palette="secondary"
-                      buttonText="Added new question"
+                      buttonText="Add new question"
                       size="small"
                       w={{
                         "min-mobile": "100%",

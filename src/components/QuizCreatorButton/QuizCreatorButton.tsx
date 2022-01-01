@@ -24,6 +24,7 @@ interface IQuizCreatorButtonProps {
   w?: any;
   variant?: "outlined";
   isLoading?: boolean;
+  buttonName?: string;
 }
 
 const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
@@ -41,6 +42,7 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
   w,
   variant,
   isLoading,
+  buttonName,
 }): JSX.Element => {
   return (
     <Button
@@ -57,6 +59,7 @@ const QuizCreatorButton: FC<IQuizCreatorButtonProps> = ({
       width={w}
       variant={variant}
       isLoading={isLoading}
+      aria-label={buttonName}
     >
       {buttonText}
       {children}

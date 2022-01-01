@@ -92,6 +92,7 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
                 "min-fullHD": "26px",
               }}
               checked={checked}
+              role={checked ? "Correct" : "Incorrect"}
             />
           </Tooltip>
           {editingMode ? (
@@ -154,6 +155,7 @@ const QuizCreatorQuestionOptionEditor: FC<IQuizCreatorQuestionOptionEditorProps>
               palette="danger"
               color="white"
               ml="10px"
+              buttonName="Delete"
             >
               <ImBin />
             </QuizCreatorButton>
