@@ -49,6 +49,13 @@ To install und run the project:
 
 ### `2. npm start`
 
+
+To run tests:
+
+### `1. npm install jest-watch-typeahead --save-dev`
+
+### `2. npm test`
+
 (Please check the back-end part: [https://github.com/VolodymyrVoronov/quiz-creator-back](https://github.com/VolodymyrVoronov/quiz-creator-back))
 
 _DISCLAIMER:_
