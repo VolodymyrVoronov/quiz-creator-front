@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@types/uniqid": "^5.3.2"
+    "@types/uniqid": "^5.3.2",
+    "jest-watch-typeahead": "^0.6.5"
   }
 }

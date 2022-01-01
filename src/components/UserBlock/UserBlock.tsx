@@ -44,7 +44,7 @@ const UserBlock: FC<{}> = (): JSX.Element => {
             palette="primary"
             borderRadius="50%"
             color="white"
-            aria-label="Back button"
+            aria-label="Log out"
             type="button"
           >
             <ImExit />
