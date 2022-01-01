@@ -1,10 +1,11 @@
 import * as React from "react";
-import { authStore } from "store/authStore";
 import ReactDOM from "react-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, HashRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
+
+import { authStore } from "store/authStore";
 
 import App from "../../App";
 import AuthFormPage from "./AuthFormPage";

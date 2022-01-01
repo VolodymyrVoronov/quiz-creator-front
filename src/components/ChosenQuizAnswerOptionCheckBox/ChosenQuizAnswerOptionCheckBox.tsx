@@ -29,6 +29,7 @@ const ChosenQuizAnswerOptionCheckBox: FC<IChosenQuizAnswerOptionCheckBoxProps> =
           "min-fullHD": "26px",
         }}
         checked={userAnswer}
+        role="checkbox"
       />
     );
   };
